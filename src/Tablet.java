@@ -9,7 +9,6 @@ public class Tablet {
     private double sellingPrice;
     private int deviceId;
 
-    // Constructor
     public Tablet(String deviceType, String manufacturer, String model, String description,
                   double displaySize, double storageSize, double purchasePrice, double sellingPrice, int deviceId) {
         this.deviceType = deviceType;
