@@ -93,4 +93,19 @@ public class Tablet {
     public void setDeviceId(int deviceId) {
         this.deviceId = deviceId;
     }
+
+    @Override
+    public String toString() {
+        return "Tablet{" +
+                "deviceType='" + deviceType + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", model='" + model + '\'' +
+                ", description='" + description + '\'' +
+                ", displaySize=" + displaySize +
+                ", storageSize=" + storageSize +
+                ", purchasePrice=" + purchasePrice +
+                ", sellingPrice=" + sellingPrice +
+                ", deviceId=" + deviceId +
+                '}';
+    }
 }
