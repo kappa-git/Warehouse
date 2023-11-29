@@ -20,6 +20,7 @@ public class Notebook {
         this.purchasePrice = purchasePrice;
         this.sellingPrice = sellingPrice;
         this.deviceId = deviceId;
+
     }
 
     public String getDeviceType() {
@@ -92,5 +93,20 @@ public class Notebook {
 
     public void setDeviceId(int deviceId) {
         this.deviceId = deviceId;
+    }
+
+    @Override
+    public String toString() {
+        return "Notebook{" +
+                "deviceType='" + deviceType + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", model='" + model + '\'' +
+                ", description='" + description + '\'' +
+                ", displaySize=" + displaySize +
+                ", storageSize=" + storageSize +
+                ", purchasePrice=" + purchasePrice +
+                ", sellingPrice=" + sellingPrice +
+                ", deviceId=" + deviceId +
+                '}';
     }
 }
