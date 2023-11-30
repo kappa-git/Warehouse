@@ -97,16 +97,15 @@ public class Notebook {
 
     @Override
     public String toString() {
-        return "Notebook{" +
-                "deviceType='" + deviceType + '\'' +
-                ", manufacturer='" + manufacturer + '\'' +
-                ", model='" + model + '\'' +
-                ", description='" + description + '\'' +
-                ", displaySize=" + displaySize +
-                ", storageSize=" + storageSize +
-                ", purchasePrice=" + purchasePrice +
-                ", sellingPrice=" + sellingPrice +
-                ", deviceId=" + deviceId +
-                '}';
+        return '\n' + "-------------------------- " + '\n' +
+                "- deviceType = " + deviceType  + '\n' +
+                "- manufacturer = " + manufacturer + '\n' +
+                "- model = " + model + '\n' +
+                "- description = " + description + '\n' +
+                "- displaySize = " + displaySize + '\n' +
+                "- storageSize = " + storageSize + '\n' +
+                "- purchasePrice = " + purchasePrice + '\n' +
+                "- sellingPrice = " + sellingPrice + '\n' +
+                "- deviceId=" + deviceId + '\n';
     }
 }
