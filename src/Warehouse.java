@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,25 +12,29 @@ public class Warehouse {
         Smartphone phone = new Smartphone("Smartphone","Apple","Iphone 11","Non disponibile",6.1,128,320.00,480.00,1123);
         Smartphone phone2 = new Smartphone("Smartphone","TCL","40SE","Non disponibile",6.0,256,120.00,230.00,7648);
 
-
         List<Notebook> lista = Arrays.asList(laptop, laptop1);
         List<Tablet> lista1 = Arrays.asList(tablet,tablet1,tablet2);
         List<Smartphone> lista2 = Arrays.asList(phone,phone2);
 
-        /*List<Notebook> lista = new ArrayList<Notebook>();
-        lista.add(laptop);
-        lista.add(laptop2);
-        List<Tablet> lista1 = new ArrayList<Tablet>();
-        lista1.add(tablet);
-        lista1.add(tablet2);
-        lista1.add(tablet3);*/
+        StringBuilder notebook = new StringBuilder();
+        for (Notebook element : lista){
+            notebook.append(element).append(" ");
 
+        }
+        StringBuilder tab = new StringBuilder();
+        for (Tablet element : lista1){
+            tab.append(element).append(" ");
 
-        System.out.println("Computer Portatili disponibili: " + lista);
-        System.out.println();
-        System.out.println("Tablet disponibili: " + lista1);
-        System.out.println();
-        System.out.println("Smartphone disponibili: " + lista2);
+        }
+        StringBuilder smartphone = new StringBuilder();
+        for (Smartphone element : lista2){
+            smartphone.append(element).append(" ");
+
+        }
+
+        System.out.println("Computer Portatili disponibili: " + '\n' + notebook);
+        System.out.println("Tablet disponibili: " + '\n' + lista1);
+        System.out.println("Smartphone disponibili: " + '\n' + lista2);
 
     }
 
