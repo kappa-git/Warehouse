@@ -110,4 +110,5 @@ public class Smartphone {
                 ", deviceId=" + deviceId +
                 '}';
     }
+    //comment
 }
