@@ -1,4 +1,5 @@
-public class Tablet implements Device{
+public class Smartphone implements Device{
+
     private String deviceType;
     private String manufacturer;
     private String model;
@@ -9,17 +10,18 @@ public class Tablet implements Device{
     private double sellingPrice;
     private int deviceId;
 
-    public Tablet(String deviceType, String manufacturer, String model, String description,
-                  double displaySize, double storageSize, double purchasePrice, double sellingPrice, int deviceId) {
-        this.deviceType = deviceType;
-        this.manufacturer = manufacturer;
-        this.model = model;
-        this.description = description;
-        this.displaySize = displaySize;
-        this.storageSize = storageSize;
-        this.purchasePrice = purchasePrice;
-        this.sellingPrice = sellingPrice;
-        this.deviceId = deviceId;
+    public Smartphone (String deviceType, String manufacturer, String model, String description,
+                       double displaySize, double storageSize, double purchasePrice, double sellingPrice,
+                       int deviceId){
+        this.deviceType= deviceType;
+        this.manufacturer= manufacturer;
+        this.model= model;
+        this.description= description;
+        this.displaySize= displaySize;
+        this.storageSize= storageSize;
+        this.purchasePrice= purchasePrice;
+        this.sellingPrice= sellingPrice;
+        this.deviceId= deviceId;
     }
 
     public String getDeviceType() {
@@ -96,7 +98,7 @@ public class Tablet implements Device{
 
     @Override
     public String toString() {
-        return  "--------------------------- " + '\n' +
+        return  "---------------------------------" + '\n' +
                 "- deviceType = " + deviceType + '\n' +
                 "- manufacturer = " + manufacturer + '\n' +
                 "- model = " + model + '\n' +
@@ -107,4 +109,5 @@ public class Tablet implements Device{
                 "- sellingPrice = " + sellingPrice + '\n' +
                 "- deviceId = " + deviceId + '\n';
     }
+
 }

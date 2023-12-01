@@ -1,4 +1,4 @@
-public class Notebook {
+public class Notebook implements Device{
     private String deviceType;
     private String manufacturer;
     private String model;
@@ -20,6 +20,7 @@ public class Notebook {
         this.purchasePrice = purchasePrice;
         this.sellingPrice = sellingPrice;
         this.deviceId = deviceId;
+
     }
 
     public String getDeviceType() {
@@ -62,8 +63,8 @@ public class Notebook {
         this.displaySize = displaySize;
     }
 
-    public double getStorageSize() {
-        return storageSize;
+    public int getStorageSize() {
+        return (int) storageSize;
     }
 
     public void setStorageSize(double storageSize) {
@@ -92,5 +93,19 @@ public class Notebook {
 
     public void setDeviceId(int deviceId) {
         this.deviceId = deviceId;
+    }
+
+    @Override
+    public String toString() {
+        return  "-------------------------- " + '\n' +
+                "- deviceType = " + deviceType  + '\n' +
+                "- manufacturer = " + manufacturer + '\n' +
+                "- model = " + model + '\n' +
+                "- description = " + description + '\n' +
+                "- displaySize = " + displaySize + '\n' +
+                "- storageSize = " + storageSize + '\n' +
+                "- purchasePrice = " + purchasePrice + '\n' +
+                "- sellingPrice = " + sellingPrice + '\n' +
+                "- deviceId=" + deviceId + '\n';
     }
 }
