@@ -58,6 +58,27 @@ public class Warehouse {
 
         List<Notebook> lista = Arrays.asList(laptop, laptop2);
         List<Tablet> lista1 = Arrays.asList(tablet,tablet2,tablet3);
+        List<Smartphone>lista2 = Arrays.asList(smartphone,smartphone2,smartphone3);
+
+        List<Notebook> filteredNotebooks = searchNotebooksBySellingPrice(lista, 800.0, 1100.0);
+        System.out.println("Notebooks within the price range are: ");
+        for (Notebook notebook : filteredNotebooks) {
+            System.out.println(notebook.getModel() + " - Selling Price: $" + notebook.getSellingPrice());
+        }
+
+        List<Tablet> filteredTablets = searchTabletsBySellingPrice(lista1, 400.0, 700.0);
+        System.out.println("Tablets within the price range are: ");
+        for (Tablet tabletItem : filteredTablets) {
+            System.out.println(tabletItem.getModel() + "C" + tabletItem.getSellingPrice());
+        }
+
+        List<Smartphone> filtertedSmartphones = searchSmartphonesBySellingPrice(lista2,700,1100);
+        System.out.println("Smartphones within the price range are: ");
+        for (Smartphone smartphoneItem : filtertedSmartphones){
+            System.out.println(smartphoneItem.getModel() + " - Selling Price: $" + smartphone.getSellingPrice());
+        }
+
+
 
         /*List<Notebook> lista = new ArrayList<Notebook>();
         lista.add(laptop);
