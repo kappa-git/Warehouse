@@ -9,6 +9,11 @@ public class Warehouse {
         Tablet tablet = new Tablet("Tablet","Lenovo","M10 plus","Non disponibile",10.6,64,300.00,359.01,1268);
         Tablet tablet2 = new Tablet("Tablet","Microsoft","Surface Pro 9","Non disponibile",13,256,998.00,1300.00,1269);
         Tablet tablet3 = new Tablet("Tablet","Apple","Ipad Air","Non disponibile",10.9,256,550.00,630.00,1270);
+        Smartphone smartphone= new Smartphone("Smartphone", "Apple","Iphone 15","Non disponibile", 6.12, 256, 500.00, 899.00, 2111);
+        Smartphone smartphone2= new Smartphone("Smartphone", "Samsung","Galaxy 23","Non disponibile", 6.10, 256, 450.00, 720.00, 2112);
+        Smartphone smartphone3= new Smartphone("Smartphone", "Huawei","P60","Non disponibile", 6.67, 256, 500.00, 1099.00, 2113);
+
+
 
         List<Notebook> lista = Arrays.asList(laptop, laptop2);
         List<Tablet> lista1 = Arrays.asList(tablet,tablet2,tablet3);
