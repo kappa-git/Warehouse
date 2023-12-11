@@ -69,13 +69,13 @@ public class Warehouse {
         List<Tablet> filteredTablets = searchTabletsBySellingPrice(lista1, 400.0, 700.0);
         System.out.println("Tablets within the price range are: ");
         for (Tablet tabletItem : filteredTablets) {
-            System.out.println(tabletItem.getModel() + "C" + tabletItem.getSellingPrice());
+            System.out.println(tabletItem.getModel() + "- Selling Price: $" + tabletItem.getSellingPrice());
         }
 
-        List<Smartphone> filtertedSmartphones = searchSmartphonesBySellingPrice(lista2,700,1100);
+        List<Smartphone> filtertedSmartphones = searchSmartphonesBySellingPrice(lista2,700,1000);
         System.out.println("Smartphones within the price range are: ");
         for (Smartphone smartphoneItem : filtertedSmartphones){
-            System.out.println(smartphoneItem.getModel() + " - Selling Price: $" + smartphone.getSellingPrice());
+            System.out.println(smartphoneItem.getModel() + " - Selling Price: $" + smartphoneItem.getSellingPrice());
         }
 
 
