@@ -3,6 +3,47 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Warehouse {
+
+    public static List<Notebook> searchNotebooksBySellingPrice(List<Notebook> notebooks, double minPrice, double maxPrice) {
+        List<Notebook> filteredNotebooks = new ArrayList<>();
+
+        for (Notebook notebook : notebooks) {
+            double sellingPrice = notebook.getSellingPrice();
+
+            if (sellingPrice >= minPrice && sellingPrice <= maxPrice) {
+                filteredNotebooks.add(notebook);
+            }
+        }
+
+        return filteredNotebooks;
+    }
+
+    public static List<Tablet> searchTabletsBySellingPrice(List<Tablet> tablets, double minPrice, double maxPrice) {
+        List<Tablet> filteredTablets = new ArrayList<>();
+
+        for (Tablet tablet : tablets) {
+            double sellingPrice = tablet.getSellingPrice();
+
+            if (sellingPrice >= minPrice && sellingPrice <= maxPrice) {
+                filteredTablets.add(tablet);
+            }
+        }
+
+        return filteredTablets;
+    }
+
+    public static List<Smartphone>searchSmartphonesBySellingPrice(List<Smartphone> smartphones, double minPrice,double maxPrice){
+        List<Smartphone> filteredSmartphones= new ArrayList<>();
+
+        for (Smartphone smartphone: smartphones){
+            double sellingPrice= smartphone.getSellingPrice();
+            if (sellingPrice>= minPrice && sellingPrice <= maxPrice){
+                filteredSmartphones.add(smartphone);
+            }
+        }
+        return filteredSmartphones;
+    }
+
     public static void main(String[] args) {
         Notebook laptop = new Notebook("Notebook", "Asus", "ZenBook", "Non disponibile", 14, 512, 850.00, 1000.00, 4431);
         Notebook laptop2 = new Notebook("Notebook", "Hp", "Pavilion Plus", "Non disponibile", 16, 1000, 780.00, 1199.00, 4432);
