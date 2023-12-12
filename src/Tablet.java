@@ -1,4 +1,4 @@
-public class Notebook implements Device{
+public class Tablet implements Device{
     private String deviceType;
     private String manufacturer;
     private String model;
@@ -9,7 +9,7 @@ public class Notebook implements Device{
     private double sellingPrice;
     private int deviceId;
 
-    public Notebook (String deviceType, String manufacturer, String model, String description,
+    public Tablet(String deviceType, String manufacturer, String model, String description,
                   double displaySize, double storageSize, double purchasePrice, double sellingPrice, int deviceId) {
         this.deviceType = deviceType;
         this.manufacturer = manufacturer;
@@ -20,75 +20,74 @@ public class Notebook implements Device{
         this.purchasePrice = purchasePrice;
         this.sellingPrice = sellingPrice;
         this.deviceId = deviceId;
-
     }
 
     public String getDeviceType() {
         return deviceType;
     }
 
-    public void setDeviceType(String deviceType) {
-        this.deviceType = deviceType;
-    }
-
     public String getManufacturer() {
         return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
     }
 
     public String getModel() {
         return model;
     }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public double getDisplaySize() {
         return displaySize;
     }
 
-    public void setDisplaySize(double displaySize) {
-        this.displaySize = displaySize;
-    }
-
     public int getStorageSize() {
         return (int) storageSize;
-    }
-
-    public void setStorageSize(double storageSize) {
-        this.storageSize = storageSize;
     }
 
     public double getPurchasePrice() {
         return purchasePrice;
     }
 
-    public void setPurchasePrice(double purchasePrice) {
-        this.purchasePrice = purchasePrice;
-    }
-
     public double getSellingPrice() {
         return sellingPrice;
     }
 
-    public void setSellingPrice(double sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
-
     public int getDeviceId() {
         return deviceId;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDisplaySize(double displaySize) {
+        this.displaySize = displaySize;
+    }
+
+    public void setStorageSize(double storageSize) {
+        this.storageSize = storageSize;
+    }
+
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
+    public void setSellingPrice(double sellingPrice) {
+        this.sellingPrice = sellingPrice;
     }
 
     public void setDeviceId(int deviceId) {
@@ -97,8 +96,8 @@ public class Notebook implements Device{
 
     @Override
     public String toString() {
-        return  "-------------------------- " + '\n' +
-                "- deviceType = " + deviceType  + '\n' +
+        return  "--------------------------- " + '\n' +
+                "- deviceType = " + deviceType + '\n' +
                 "- manufacturer = " + manufacturer + '\n' +
                 "- model = " + model + '\n' +
                 "- description = " + description + '\n' +
@@ -106,6 +105,6 @@ public class Notebook implements Device{
                 "- storageSize = " + storageSize + '\n' +
                 "- purchasePrice = " + purchasePrice + '\n' +
                 "- sellingPrice = " + sellingPrice + '\n' +
-                "- deviceId=" + deviceId + '\n';
+                "- deviceId = " + deviceId + '\n';
     }
 }
