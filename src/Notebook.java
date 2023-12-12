@@ -1,4 +1,4 @@
-public class Notebook {
+public class Notebook implements Device{
     private String deviceType;
     private String manufacturer;
     private String model;
@@ -63,8 +63,8 @@ public class Notebook {
         this.displaySize = displaySize;
     }
 
-    public double getStorageSize() {
-        return storageSize;
+    public int getStorageSize() {
+        return (int) storageSize;
     }
 
     public void setStorageSize(double storageSize) {
@@ -97,16 +97,15 @@ public class Notebook {
 
     @Override
     public String toString() {
-        return "Notebook{" +
-                "deviceType='" + deviceType + '\'' +
-                ", manufacturer='" + manufacturer + '\'' +
-                ", model='" + model + '\'' +
-                ", description='" + description + '\'' +
-                ", displaySize=" + displaySize +
-                ", storageSize=" + storageSize +
-                ", purchasePrice=" + purchasePrice +
-                ", sellingPrice=" + sellingPrice +
-                ", deviceId=" + deviceId +
-                '}';
+        return  "-------------------------- " + '\n' +
+                "- deviceType = " + deviceType  + '\n' +
+                "- manufacturer = " + manufacturer + '\n' +
+                "- model = " + model + '\n' +
+                "- description = " + description + '\n' +
+                "- displaySize = " + displaySize + '\n' +
+                "- storageSize = " + storageSize + '\n' +
+                "- purchasePrice = " + purchasePrice + '\n' +
+                "- sellingPrice = " + sellingPrice + '\n' +
+                "- deviceId=" + deviceId + '\n';
     }
 }

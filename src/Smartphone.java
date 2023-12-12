@@ -1,4 +1,4 @@
-public class Smartphone {
+public class Smartphone implements Device{
 
     private String deviceType;
     private String manufacturer;
@@ -44,8 +44,8 @@ public class Smartphone {
         return displaySize;
     }
 
-    public double getStorageSize() {
-        return storageSize;
+    public int getStorageSize() {
+        return (int) storageSize;
     }
 
     public double getPurchasePrice() {
@@ -98,17 +98,16 @@ public class Smartphone {
 
     @Override
     public String toString() {
-        return "Notebook{" +
-                "deviceType='" + deviceType + '\'' +
-                ", manufacturer='" + manufacturer + '\'' +
-                ", model='" + model + '\'' +
-                ", description='" + description + '\'' +
-                ", displaySize=" + displaySize +
-                ", storageSize=" + storageSize +
-                ", purchasePrice=" + purchasePrice +
-                ", sellingPrice=" + sellingPrice +
-                ", deviceId=" + deviceId +
-                '}';
+        return  "---------------------------------" + '\n' +
+                "- deviceType = " + deviceType + '\n' +
+                "- manufacturer = " + manufacturer + '\n' +
+                "- model = " + model + '\n' +
+                "- description = " + description + '\n' +
+                "- displaySize = " + displaySize + '\n' +
+                "- storageSize = " + storageSize + '\n' +
+                "- purchasePrice = " + purchasePrice + '\n' +
+                "- sellingPrice = " + sellingPrice + '\n' +
+                "- deviceId = " + deviceId + '\n';
     }
-    //comment
+
 }
