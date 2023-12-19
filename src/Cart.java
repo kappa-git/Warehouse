@@ -1,76 +1,44 @@
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
+class Cart {
+    private final List<Device> cartItems = new ArrayList<>();
 
-public class Cart {
-    private final ArrayList<Device> Warehouse;
-    private static ArrayList<String> cart;
-
-    private Cart() {
-        Warehouse = new ArrayList<Device>();
-        cart = new ArrayList<String>();
+    public void addToCart(Device device) {
+        cartItems.add(device);
     }
 
-    private void addToWarehouse(Device device) {
-        Warehouse.add(device);
-        System.out.println(device + " aggiunto al magazzino.");
-    }
-
-    private void unloadFromWarehouse(Device device) {
-        if (Warehouse.contains(device)) {
-            Warehouse.remove(device);
-            System.out.println(device + " rimosso da magazzino.");
-        } else {
-            System.out.println("Questo " + device + " non è disponibile.");
-        }
-    }
-
-    private void addToCart(String device) {
-        if (Warehouse.contains(device)) {
-            cart.add(device);
-            Warehouse.remove(device);
-            System.out.println(device + " aggiunto al carrello.");
-        } else {
-            System.out.println("Il dispositivo non è disponibile nel magazzino: " + device);
-        }
-    }
-
-    private void stampWarehouse() {
-        System.out.println("Dispositivi disponibili in magazzino:");
-        for (Device device : Warehouse) {
-            System.out.println(device);
-        }
-    }
-
-    private void stampCart() {
-        System.out.println("Dispositivi nel carrello:");
-        for (String device : cart) {
-            System.out.println(device);
-        }
-    }
-
-    public static double calcolaSpesaMedia(ArrayList<Device> devices) {
-        if (devices.isEmpty()) {
-            return -1;
-        }
-
-        double sommaSpese = 0;
-        for (Device device : devices) {
-            sommaSpese += device.getSellingPrice();
-        }
-
-        return sommaSpese / devices.size();
-    }
-    public static ArrayList<String> addToCart(int deviceId, Device[] devices) {
-        for (Device device : devices) {
+    public void removeFromCart(int deviceId) {
+        Iterator<Device> iterator = cartItems.iterator();
+        while (iterator.hasNext()) {
+            Device device = iterator.next();
             if (device.getDeviceId() == deviceId) {
-                cart.add(String.valueOf(device));
-                cart.remove(device);
-
+                iterator.remove();
+                System.out.println("Element with ID " + deviceId + " removed from list.");
+                return;
             }
         }
-        return cart;
     }
+
+    public double calculateTotal() {
+        return cartItems.stream().mapToDouble(Device::getSellingPrice).sum();
+    }
+
+    public void clearCart() {
+        cartItems.clear();
+    }
+
+    public List<Device> getCartItems() {
+        return cartItems;
+    }
+
+    public double calculateMidPrice() {
+        return cartItems.stream()
+                .mapToDouble(Device::getSellingPrice)
+                .average()
+                .orElse(0.0);
+    }
+
+
 }
-
-
-
