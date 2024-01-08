@@ -1,80 +1,27 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 class Warehouse {
-    private List<Device> inventory;
+    private List<Device> scaffoldItems = new ArrayList<>();
 
     public Warehouse() {
-        this.inventory = new ArrayList<>();
-        this.inventory.addAll(getInventory());
+        this.scaffoldItems.addAll(getInventory());
     }
 
-//    public List<Integer> addProduct(Device device, int quantityToAdd) {
-//        List<Integer> addedDeviceIds = new ArrayList<>();
-//        for (int i = 0; i < quantityToAdd; i++) {
-//            Device newDevice = new Device(device.getDeviceType(),
-//                    device.getManufacturer(),
-//                    device.getModel(),
-//                    device.getDescription(),
-//                    device.getDisplaySize(),
-//                    device.getStorageSize(),
-//                    device.getPurchasePrice(),
-//                    device.getSellingPrice(),
-//                    device.getDeviceId(),
-//                    device.getQuantity());
-//            inventory.add(newDevice);
-//            addedDeviceIds.add(newDevice.getDeviceId());
-//            newDevice.setQuantity(quantityToAdd);
-//
-//        }
-//
-//        return addedDeviceIds;
-//    }
-
-    //    public int addProduct(Device device, int quantityToAdd){
-//        int idToAdd = device.getDeviceId();
-//        List<Device> inventoryDevices = getInventory();
-//        Device deviceToModify = null;
-//        for(Device devices : inventoryDevices){
-//            if (idToAdd == devices.getDeviceId()) {
-//                deviceToModify = devices;
-//            }
-//        }
-//
-//        deviceToModify.setQuantity(device.getQuantity() + quantityToAdd);
-//        return idToAdd;
-//    }
-    public void addProduct(Device updatedDevice) {
-        for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).getDeviceId() == updatedDevice.getDeviceId()) {
-                Device existingDevice = inventory.get(i);
-                int existingQuantity = existingDevice.getQuantity();
-                int updatedQuantity = updatedDevice.getQuantity();
-
-                existingDevice.setQuantity(existingQuantity + updatedQuantity);
-                existingDevice.setDisplaySize(updatedDevice.getDisplaySize());
-                existingDevice.setStorageSize(updatedDevice.getStorageSize());
-                existingDevice.setPurchasePrice(updatedDevice.getPurchasePrice());
-                existingDevice.setSellingPrice(updatedDevice.getSellingPrice());
-                existingDevice.setDescription(updatedDevice.getDescription());
-
-                break;
-            }
-        }
+    public void addProduct(Product product, int quantityToAdd) {
+        Product productToUodate = scaffoldItems.stream().filter(productToCheck -> productToCheck == product).collect(Collectors.toList()).getFirst();
+        scaffoldItems.remove(productToUodate);
+        productToUodate.setQuantity(productToUodate.getQuantity()+quantityToAdd);
+        scaffoldItems.add(productToUodate);
+        System.out.println("LOG - Warehouse - Product added to the Warehouse");
     }
 
 
 
 
 
-    public void removeProduct(int deviceToRemove) {
-        Iterator<Device> iterator = inventory.iterator();
-        while (iterator.hasNext()) {
-            Device device = iterator.next();
-            if (device.deviceId() == deviceToRemove) {
-                iterator.remove();
-                break;
-            }
-        }
+    public Boolean removeProduct(int deviceToRemove) {
+        return scaffoldItems.removeIf(device -> device.getProductId() == deviceToRemove);
     }
 
     public List<Device> getInventory() {
@@ -89,6 +36,8 @@ class Warehouse {
         return new ArrayList<>(Arrays.asList(laptop, laptop1, tablet1, tablet2, tablet3, phone, phone2));
     }
 
-
+    public List<Product> getItems() {
+        return scaffoldItems;
+    }
 
 }
