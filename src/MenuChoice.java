@@ -10,6 +10,8 @@ public enum MenuChoice {
     FinalizeSale,
     SearchByManufacturer,
     SearchBySellingPrice,
+    SearchByPurchasePrice,
+    SearchByID,
     Exit,
     NotValid
 }
