@@ -3,7 +3,7 @@ public class Main {
         CartManager cartManager = new CartManager();
         WarehouseManager warehouseManager = new WarehouseManager();
 
-        Menu menu = new Menu()(warehouseManager, cartManager);
+        Menu menu = new Menu(warehouseManager, cartManager);
         menu.start();
     }
 }
