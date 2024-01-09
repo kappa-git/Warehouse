@@ -207,5 +207,5 @@ public class Menu {
         return cart.calculateMidPrice();
         }
 
-        private
+
 }
