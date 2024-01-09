@@ -2,7 +2,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 class Warehouse {
-    private List<Device> scaffoldItems = new ArrayList<>();
+    private List<Product> scaffoldItems = new ArrayList<>();
 
     public Warehouse() {
         this.scaffoldItems.addAll(getInventory());
@@ -24,7 +24,7 @@ class Warehouse {
         return scaffoldItems.removeIf(device -> device.getProductId() == deviceToRemove);
     }
 
-    public List<Device> getInventory() {
+    public List<Product> getInventory() {
         Notebook laptop = new Notebook("Notebook", "Asus", "ZenBook", "Non disponibile", 14, 1024, 850.00, 1000.00, 4431);
         Notebook laptop1 = new Notebook("Notebook", "Hp", "Pavilion Plus", "Non disponibile", 16, 2048, 780.00, 1199.00, 4432);
         Tablet tablet1 = new Tablet("Tablet", "Lenovo", "M10 plus", "Non disponibile", 10.6, 128, 300.00, 359.01, 1268);

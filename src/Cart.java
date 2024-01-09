@@ -3,7 +3,7 @@ import java.util.Iterator;
 import java.util.List;
 
 class Cart {
-    private final List<Device> cartItems = new ArrayList<>();
+    private final List<Product> cartItems = new ArrayList<>();
 
     public Boolean addToCart(Product product) {
         if (product != null){
@@ -23,7 +23,7 @@ class Cart {
     }
 
     public double calculateTotal() {
-        return cartItems.stream().mapToDouble(Device::getSellingPrice).sum();
+        return cartItems.stream().mapToDouble(Product::getSellingPrice).sum();
     }
 
     public boolean clearCart() {
@@ -31,13 +31,13 @@ class Cart {
         return cartItems.isEmpty();
     }
 
-    public List<Device> getCartItems() {
+    public List<Product> getCartItems() {
         return cartItems;
     }
 
     public double calculateMidPrice() {
         return cartItems.stream()
-                .mapToDouble(Device::getSellingPrice)
+                .mapToDouble(Product::getSellingPrice)
                 .average()
                 .orElse(0.0);
     }
