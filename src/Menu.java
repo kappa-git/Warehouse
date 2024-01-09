@@ -60,6 +60,7 @@ public class Menu {
                 };
             }
 
+
         private void printProducts(){
             warehouseManager.printProducts();
             start();
@@ -86,7 +87,7 @@ public class Menu {
 
             deviceIdToAddToCart = checkIfIntEntered();
 
-            Product product = warehouseManager.searchById(deviceIdToAddToCart);
+            Product product = warehouseManager.findProductById(deviceIdToAddToCart);
             if (product != null & cartManager.addToCart(product)) {
                 System.out.println("Product is added to cart");
                 start();

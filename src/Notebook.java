@@ -1,4 +1,4 @@
-public class Notebook extends Device {
+public class Notebook extends Product {
     public Notebook(String deviceType, String manufacturer, String model, String description,
                     double displaySize, int storageSize, double purchasePrice,
                     double sellingPrice, int deviceId) {
