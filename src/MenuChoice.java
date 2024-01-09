@@ -1,7 +1,7 @@
 public enum MenuChoice {
 
     PrintProduct,
-    AddToWarehouse,
+    AddToWareHouse,
     RemoveFromWarehouse,
     AddToCart,
     RemoveFromCart,
@@ -11,7 +11,6 @@ public enum MenuChoice {
     SearchByManufacturer,
     SearchBySellingPrice,
     SearchByPurchasePrice,
-    SearchByID,
     Exit,
     NotValid
 }
