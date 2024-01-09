@@ -1,4 +1,4 @@
-class Device {
+class Product {
 
     private String deviceType;
     private String manufacturer;
@@ -11,7 +11,7 @@ class Device {
     private int deviceId;
     private int quantity;
 
-    public Device (String deviceType, String manufacturer, String model, String description,
+    public Product (String deviceType, String manufacturer, String model, String description,
                    double displaySize, int storageSize, double purchasePrice,
                    double sellingPrice, int deviceId) {
         this.deviceType = deviceType;
@@ -26,7 +26,7 @@ class Device {
         this.quantity = 0;
     }
 
-    public Device(Device device) {
+    public Product(Product product) {
 
     }
 //    public void increaseQuantity(int incremento) {

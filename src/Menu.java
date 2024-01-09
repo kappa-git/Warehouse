@@ -30,20 +30,20 @@ public class Menu {
         System.out.print("Enter your choice: ");
         readChoiceInputFromUser();
     }
-    private void readChoiceInputFromUser(){
+    private void readChoiceInputFromUser() {
         Integer choice;
 
-            try {
-                choice = scanner.nextInt();
-                MenuChoiche menuChoiche = checkInputChoice(choice);
-                doTheChoice(menuChoiche);
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number.");
-                scanner.nextLine();
-                choice = 0;
-            }
-
-            private static MenuChoice checkInputChoice(Integer choice){
+        try {
+            choice = scanner.nextInt();
+            MenuChoice menuChoice = checkInputChoice(choice);
+            doTheChoice(menuChoice);
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a number.");
+            scanner.nextLine();
+            choice = 0;
+        }
+    }
+            private MenuChoice checkInputChoice(Integer choice){
             return switch (choice) {
                 case 1 -> MenuChoice.PrintProduct;
                 case 2 -> MenuChoice.AddToWarehouse;
@@ -67,7 +67,7 @@ public class Menu {
 
         private void addToWarehouse(){
             System.out.println("Enter product ID: ");
-            int deviceToAdd = scanner.nextInt();
+            int deviceIdToAdd = scanner.nextInt();
             System.out.println("Enter quantity: ");
             int quantityToAdd = scanner.nextInt();
             warehouseManager.addToWarehouse(deviceIdToAdd,quantityToAdd);
@@ -86,8 +86,8 @@ public class Menu {
 
             deviceIdToAddToCart = checkIfIntEntered();
 
-            Device device = warehouseManager.searchById(deviceIdToAddToCart);
-            if (device != null & cartManager.addToCart(device)) {
+            Product product = warehouseManager.searchById(deviceIdToAddToCart);
+            if (product != null & cartManager.addToCart(product)) {
                 System.out.println("Product is added to cart");
                 start();
             } else {
@@ -100,8 +100,8 @@ public class Menu {
             int deviceIdToRemoveFromCart;
 
             deviceIdToRemoveFromCart = checkIfIntEntered();
-            Device device = warehouseManager.searchById(deviceIdToRemoveFromCart);
-            if (Device != null & cartManager.removeFromCart(device)) {
+            Product product = warehouseManager.searchById(deviceIdToRemoveFromCart);
+            if (Product != null & cartManager.removeFromCart(product)) {
                 System.out.println("Product is removed from cart");
             } else {
                 System.out.println("Product is NOT removed from cart, please retry");
@@ -113,23 +113,26 @@ public class Menu {
             System.out.println("Enter purchase price to search: ");
             double purchasePriceToSearch = chechIfDoubleEntered();
 
-            List<Device> result = warehouseManager.searchBySellingPrice(purchasePriceToSearch);
+            List<Product> result = warehouseManager.searchBySellingPrice(purchasePriceToSearch);
             if (!result.isEmpty()) {
-                for(Device product : result) {
+                for(Product product : result) {
                     System.out.println(product);
                 }
             }
 
             }
         }
+
+
+
     private void searchByManufacturer(){
             System.out.println("Enter manufacturer to search: ");
             String manufacturerToSearch = checkIfStringEntered();
 
-            List<Device> result = warehouseManager.searchByManufacturer(manufacturerToSearch);
+            List<Product> result = warehouseManager.searchByManufacturer(manufacturerToSearch);
             if (!result.isEmpty()) {
-                for (Device device : result) {
-                    System.out.println(device.getDeviceType());
+                for (Product product : result) {
+                    System.out.println(product.getDeviceType());
                 }
             }
 
@@ -138,10 +141,10 @@ public class Menu {
         System.out.println("Enter selling price to search: ");
         int sellingPriceToSearch = checkIfIntEntered();
 
-        List<Device> result = warehouseManager.searchBySellingPrice(sellingPriceToSearch);
+        List<Product> result = warehouseManager.searchBySellingPrice(sellingPriceToSearch);
         if (!result.isEmpty()) {
-            for (Device device : result) {
-                System.out.println(device.getSellingPrice());
+            for (Product product : result) {
+                System.out.println(product.getSellingPrice());
             }
         }
     }

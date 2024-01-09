@@ -34,9 +34,9 @@ class WarehouseManager {
     }
 
     public void addToCart(int deviceId) {
-        Device device = findProductById(deviceId, warehouse.getInventory());
-        if (device != null && device.getQuantity() > 0) {
-            cart.addToCart(device);
+        Product product = findProductById(deviceId, warehouse.getInventory());
+        if (product != null && product.getQuantity() > 0) {
+            cart.addToCart(product);
             removeFromWarehouse(deviceId);
             System.out.println("Product added to cart.");
         } else {
@@ -44,11 +44,11 @@ class WarehouseManager {
         }
     }
 
-    public void removeFromCart(int deviceId) {
-        Device device = findProductById(deviceId, cart.getCartItems());
-        if (device != null) {
-            cart.removeFromCart(deviceId);
-            addToWarehouse(deviceId, 1);
+    public void removeFromCart(int productId) {
+        Product product = findProductById(productId, cart.getCartItems());
+        if (product != null) {
+            cart.removeFromCart(productId);
+            addToWarehouse(productId, 1);
             System.out.println("Product removed from cart.");
         } else {
             System.out.println("Product not found in the cart.");
@@ -67,10 +67,10 @@ class WarehouseManager {
         System.out.println("Sale finalized. Cart cleared.");
     }
 
-    private Device findProductById(int deviceId, List<Device> devices) {
-        for (Device device : devices) {
-            if (device.getDeviceId() == (deviceId)) {
-                return device;
+    private Product findProductById(int deviceId, List<Product> devices) {
+        for (Product product : devices) {
+            if (product.getDeviceId() == (deviceId)) {
+                return product;
             }
         }
 
@@ -78,13 +78,13 @@ class WarehouseManager {
     }
 
     public void addToWarehouse(int deviceIdToAdd, int quantityToAdd) {
-        Device device = findProductById(deviceIdToAdd, warehouse.getInventory());
+        Product product = findProductById(deviceIdToAdd, warehouse.getInventory());
 
-        if (device != null) {
-            int currentQuantity = device.getQuantity();
-            device.setQuantity(currentQuantity + quantityToAdd);
+        if (product != null) {
+            int currentQuantity = product.getQuantity();
+            product.setQuantity(currentQuantity + quantityToAdd);
 
-            warehouse.addProduct(device);
+            warehouse.addProduct(product);
 
             System.out.println("Product added to the warehouse: " + device);
         } else {
@@ -92,12 +92,12 @@ class WarehouseManager {
         }
     }
 
-    public  List<Device> searchByDevice(String type){
-        List<Device> results = new ArrayList<>();
+    public  List<Product> searchByDevice(String type){
+        List<Product> results = new ArrayList<>();
 
-        for (Device device : warehouse.getInventory()) {
-            if (device.getDeviceType().equalsIgnoreCase(String.valueOf(type))){
-                results.add(device);
+        for (Product product : warehouse.getInventory()) {
+            if (product.getDeviceType().equalsIgnoreCase(String.valueOf(type))){
+                results.add(product);
             }
         }
         if (results.isEmpty()){
