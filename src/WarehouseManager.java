@@ -1,3 +1,4 @@
+import java.awt.Menu;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +68,7 @@ class WarehouseManager {
         System.out.println("Sale finalized. Cart cleared.");
     }
 
-    private Product findProductById(int deviceId, List<Product> devices) {
+    public Product findProductById(int deviceId, List<Product> devices) {
         for (Product product : devices) {
             if (product.getDeviceId() == (deviceId)) {
                 return product;

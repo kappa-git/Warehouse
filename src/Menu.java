@@ -30,6 +30,7 @@ public class Menu {
         System.out.print("Enter your choice: ");
         readChoiceInputFromUser();
     }
+
     private void readChoiceInputFromUser() {
         Integer choice;
 
@@ -43,24 +44,50 @@ public class Menu {
             choice = 0;
         }
     }
-            private MenuChoice checkInputChoice(Integer choice){
-            return switch (choice) {
-                case 1 -> MenuChoice.PrintProduct;
-                case 2 -> MenuChoice.AddToWarehouse;
-                case 3 -> MenuChoice.RemoveFromWarehouse;
-                case 4 -> MenuChoice.AddToCart;
-                case 5 -> MenuChoice.RemoveFromCart;
-                case 6 -> MenuChoice.CalculateCartTotal;
-                case 7 -> MenuChoice.CalculateMidTotal;
-                case 8 -> MenuChoice.FinalizeSale;
-                case 9 -> MenuChoice.SearchByManufacturer;
-                case 10 -> MenuChoice.SearchBySellingPrice;
-                case 11 -> MenuChoice.SearchByPurchasePrice;
-                default -> MenuChoice.NotValid;
-                };
-            }
 
-        private void printProducts(){
+    private MenuChoice checkInputChoice(Integer choice) {
+        return switch (choice) {
+            case 1 -> MenuChoice.PrintProduct;
+            case 2 -> MenuChoice.AddToWareHouse;
+            case 3 -> MenuChoice.RemoveFromWarehouse;
+            case 4 -> MenuChoice.AddToCart;
+            case 5 -> MenuChoice.RemoveFromCart;
+            case 6 -> MenuChoice.CalculateCartTotal;
+            case 7 -> MenuChoice.CalculateMidTotal;
+            case 8 -> MenuChoice.FinalizeSale;
+            case 9 -> MenuChoice.SearchByManufacturer;
+            case 10 -> MenuChoice.SearchBySellingPrice;
+            case 11 -> MenuChoice.SearchByPurchasePrice;
+            default -> MenuChoice.NotValid;
+        };
+    }
+
+    private void doTheChoice(MenuChoice menuChoice) {
+        switch (menuChoice) {
+            case PrintProduct -> printEd();
+            case AddToWareHouse -> addToWarehouse();
+            case RemoveFromWarehouse -> removeFromWarehouse();
+            case AddToCart -> addToCart();
+            case RemoveFromCart -> removeFromCart();
+            case CalculateCartTotal -> calculateCartTotal();
+            case CalculateMidTotal -> calculateMidTotal();
+            case FinalizeSale -> finalizeSale();
+            case SearchByManufacturer -> searchByManufacturer();
+            case SearchBySellingPrice -> searchBySellingPrice();
+            case SearchByPurchasePrice -> searchByPurchasePrice();
+            case Exit -> {
+                System.out.println("Exiting program. Goodbye!");
+                scanner.close();
+            }
+            case NotValid -> {
+                System.out.println("Choice not managed! Restart.");
+                start();
+            }
+        }
+    }
+
+
+        private void printEd () {
             warehouseManager.printProducts();
             start();
         }
@@ -70,23 +97,23 @@ public class Menu {
             int deviceIdToAdd = scanner.nextInt();
             System.out.println("Enter quantity: ");
             int quantityToAdd = scanner.nextInt();
-            warehouseManager.addToWarehouse(deviceIdToAdd,quantityToAdd);
+            warehouseManager.addToWarehouse(deviceIdToAdd, quantityToAdd);
             start();
         }
 
-        private void removeFromWarehouse(){
+        private void removeFromWarehouse () {
             System.out.println("Enter product ID to remove: ");
             int deviceIdToRemove = scanner.nextInt();
             warehouseManager.removeFromWarehouse(deviceIdToRemove);
         }
 
-        private void addToCart() {
+        private void addToCart () {
             System.out.println("Enter device ID to add to cart: ");
             int deviceIdToAddToCart;
 
             deviceIdToAddToCart = checkIfIntEntered();
 
-            Product product = warehouseManager.searchById(deviceIdToAddToCart);
+            Product product = warehouseManager.findProductById(deviceIdToAddToCart);
             if (product != null & cartManager.addToCart(product)) {
                 System.out.println("Product is added to cart");
                 start();
@@ -95,7 +122,7 @@ public class Menu {
                 start();
             }
         }
-        private void removeFromCart(){
+        private void removeFromCart () {
             System.out.println("Enter device ID to remove from cart: ");
             int deviceIdToRemoveFromCart;
 
@@ -109,35 +136,35 @@ public class Menu {
             }
         }
 
-    private void searchByPurchasePrice(){
+        private void searchByPurchasePrice () {
             System.out.println("Enter purchase price to search: ");
             double purchasePriceToSearch = chechIfDoubleEntered();
 
             List<Product> result = warehouseManager.searchBySellingPrice(purchasePriceToSearch);
             if (!result.isEmpty()) {
-                for(Product product : result) {
+                for (Product product : result) {
                     System.out.println(product);
                 }
             }
 
-            }
         }
 
 
 
-    private void searchByManufacturer(){
-            System.out.println("Enter manufacturer to search: ");
-            String manufacturerToSearch = checkIfStringEntered();
+    private void searchByManufacturer() {
+        System.out.println("Enter manufacturer to search: ");
+        String manufacturerToSearch = checkIfStringEntered();
 
-            List<Product> result = warehouseManager.searchByManufacturer(manufacturerToSearch);
-            if (!result.isEmpty()) {
-                for (Product product : result) {
-                    System.out.println(product.getDeviceType());
-                }
+        List<Product> result = warehouseManager.searchByManufacturer(manufacturerToSearch);
+        if (!result.isEmpty()) {
+            for (Product product : result) {
+                System.out.println(product.getDeviceType());
             }
-
         }
-    private void searchBySellingPrice(){
+
+    }
+
+    private void searchBySellingPrice() {
         System.out.println("Enter selling price to search: ");
         int sellingPriceToSearch = checkIfIntEntered();
 
@@ -151,22 +178,22 @@ public class Menu {
 
 
     private int checkIfIntEntered() {
-                try {
-                    return scanner.nextInt();
-                } catch (Exception e) {
-                    System.out.println("Invalid input. Please enter a number.");
-                    return scanner.nextInt();
-                }
+        try {
+            return scanner.nextInt();
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please enter a number.");
+            return scanner.nextInt();
         }
-    private Double checkIfDoubleIsEntered(){
-                try {
-                    return Double.parseDouble(scanner.next())
-                } catch (Exception e) {
-                    System.out.println("Invalid input. Please re-enter.");
-                    return checkIfDoubleIsEntered;
-                }
+    }
+
+
+    private Double checkIfDoubleIsEntered() {
+        try {
+            return Double.parseDouble(scanner.next());
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please re-enter.");
+            return checkIfDoubleIsEntered;
         }
+    }
 
-
-
-}
+    }
