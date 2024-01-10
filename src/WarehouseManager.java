@@ -87,7 +87,7 @@ class WarehouseManager {
 
             warehouse.addProduct(product);
 
-            System.out.println("Product added to the warehouse: " + device);
+            System.out.println("Product added to the warehouse: " + product);
         } else {
             System.out.println("Product not found in the inventory.");
         }
@@ -106,12 +106,12 @@ class WarehouseManager {
         }
         return results;
     }
-    public List<Device> searchByManufacturer(String manufacturer) {
-        List<Device> searchResults = new ArrayList<>();
+    public List<Product> searchByManufacturer(String manufacturer) {
+        List<Product> searchResults = new ArrayList<>();
 
-        for (Device device : warehouse.getInventory()) {
-            if (device.getManufacturer().equalsIgnoreCase(manufacturer)) {
-                searchResults.add(device);
+        for (Product product : warehouse.getInventory()) {
+            if (product.getManufacturer().equalsIgnoreCase(manufacturer)) {
+                searchResults.add(product);
             }
         }
 
@@ -121,12 +121,12 @@ class WarehouseManager {
 
         return searchResults;
     }
-    public List<Device> searchBySellingPrice(double sellingPrice) {
-        List<Device> searchPrice = new ArrayList<>();
+    public List<Product> searchBySellingPrice(double sellingPrice) {
+        List<Product> searchPrice = new ArrayList<>();
 
-        for (Device device : warehouse.getInventory()) {
-            if (device.getSellingPrice() == sellingPrice) {
-                searchPrice.add(device);
+        for (Product product : warehouse.getInventory()) {
+            if (product.getSellingPrice() == sellingPrice) {
+                searchPrice.add(product);
             }
         }
 
@@ -136,12 +136,12 @@ class WarehouseManager {
         return searchPrice;
     }
 
-    public List<Device> searchByPurchasePrice (double purchasePrice){
-        List<Device> searchPurchasePrice = new ArrayList<>();
+    public List<Product> searchByPurchasePrice (double purchasePrice){
+        List<Product> searchPurchasePrice = new ArrayList<>();
 
-        for (Device device : warehouse.getInventory()) {
-            if (device.getPurchasePrice() == purchasePrice) {
-                searchPurchasePrice.add(device);
+        for (Product product : warehouse.getInventory()) {
+            if (product.getPurchasePrice() == purchasePrice) {
+                searchPurchasePrice.add(product);
             }
         }
 
@@ -150,13 +150,13 @@ class WarehouseManager {
         }
         return searchPurchasePrice;
     }
-    public List<Device> searchByRangeOfPrice (double purchaseminPrice, double purchasemaxPrice){
-        List<Device> searchByRangeOfPrice = new ArrayList<>();
+    public List<Product> searchByRangeOfPrice (double purchaseminPrice, double purchasemaxPrice){
+        List<Product> searchByRangeOfPrice = new ArrayList<>();
 
-        for (Device device : warehouse.getInventory()) {
-            double purchasePrice= device.getPurchasePrice();
+        for (Product product : warehouse.getInventory()) {
+            double purchasePrice= product.getPurchasePrice();
             if (purchasePrice >= purchaseminPrice && purchasePrice <= purchasemaxPrice) {
-                searchByRangeOfPrice.add(device);
+                searchByRangeOfPrice.add(product);
             }
         }
 
@@ -166,12 +166,12 @@ class WarehouseManager {
         return searchByRangeOfPrice;
     }
 
-    public List<Device> searchByModel (String model) {
-        List<Device> searchModel = new ArrayList<>();
+    public List<Product> searchByModel (String model) {
+        List<Product> searchModel = new ArrayList<>();
 
-        for (Device device : warehouse.getInventory()) {
-            if (device.getModel().equals(model)) {
-                searchModel.add(device);
+        for (Product product : warehouse.getInventory()) {
+            if (product.getModel().equals(model)) {
+                searchModel.add(product);
             }
         }
 
