@@ -207,5 +207,13 @@ public class Menu {
         return cart.calculateMidPrice();
         }
 
+        private void finalizeSale(){
+        double total= calculateCartTotal();
+        cart.clearCart();
+            System.out.println("Sale finalized. Your total payed is " + total);
+        }
+
+
+
 
 }
