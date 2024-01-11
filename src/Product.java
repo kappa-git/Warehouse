@@ -26,13 +26,6 @@ class Product {
         this.quantity = 0;
     }
 
-    public Product(Product product) {
-
-    }
-//    public void increaseQuantity(int incremento) {
-//        this.quantity += incremento;
-//    }
-
     public int getQuantity() {
         return quantity;
     }
