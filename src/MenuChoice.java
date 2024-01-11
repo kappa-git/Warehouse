@@ -2,7 +2,7 @@ public enum MenuChoice {
 
     PrintProduct,
     AddToWareHouse,
-    RemoveFromWarehouse,
+    RemoveFromWareHouse,
     AddToCart,
     RemoveFromCart,
     CalculateMidTotal,

@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class Menu {
     private WarehouseManager warehouseManager;
-    private Cart cart;
     private CartManager cartManager;
     private Scanner scanner = new Scanner(System.in);
+
 
     public Menu(WarehouseManager warehouseManager, CartManager cartManager) {
         this.cartManager = cartManager;
@@ -87,13 +87,12 @@ public class Menu {
         }
     }
 
-
-    private void printEd() {
+    private void printProducts() {
         warehouseManager.printProducts();
         start();
     }
 
-    private void addToWarehouse() {
+    private void addToWareHouse() {
         System.out.println("Enter product ID: ");
         int deviceIdToAdd = scanner.nextInt();
         System.out.println("Enter quantity: ");
@@ -102,7 +101,7 @@ public class Menu {
         start();
     }
 
-    private void removeFromWarehouse() {
+    private void removeFromWareHouse() {
         System.out.println("Enter product ID to remove: ");
         int deviceIdToRemove = scanner.nextInt();
         warehouseManager.removeFromWarehouse(deviceIdToRemove);
@@ -114,8 +113,9 @@ public class Menu {
 
         deviceIdToAddToCart = checkIfIntEntered();
 
-        Product product = warehouseManager.findProductById(deviceIdToAddToCart);
-        if (product != null & cartManager.addToCart(product)) {
+
+        Product product = warehouseManager.searchById(deviceIdToAddToCart);
+        if (product != null && cartManager.addToCart(product)) {
             System.out.println("Product is added to cart");
             start();
         } else {
@@ -123,97 +123,93 @@ public class Menu {
             start();
         }
     }
+//        private void removeFromCart(){
+//            System.out.println("Enter device ID to remove from cart: ");
+//            int deviceIdToRemoveFromCart = checkIfIntEntered();
+//            Product product = warehouseManager.searchById(deviceIdToRemoveFromCart);
+//            if (product != null && cartManager.removeFromCart(product)) {
+//                System.out.println("Product is removed from cart");
+//            } else {
+//                System.out.println("Product is NOT removed from cart, please retry");
+//                start();
+//            }
+//        }
 
-    private void removeFromCart() {
-        System.out.println("Enter device ID to remove from cart: ");
-        int deviceIdToRemoveFromCart;
+    private void searchByPurchasePrice() {
+        System.out.println("Enter purchase price to search: ");
+        double purchasePriceToSearch = checkIfDoubleIsEntered();
 
-        deviceIdToRemoveFromCart = checkIfIntEntered();
-        Product product = warehouseManager.searchById(deviceIdToRemoveFromCart);
-        if (product != null & cartManager.removeFromCart(product)) {
-            System.out.println("Product is removed from cart");
-        } else {
-            System.out.println("Product is NOT removed from cart, please retry");
-            start();
+        List<Product> result = warehouseManager.searchBySellingPrice(purchasePriceToSearch);
+        if (!result.isEmpty()) {
+            for (Product product : result) {
+                System.out.println(product);
+            }
+        }
+
+    }
+
+
+    private void searchByManufacturer() {
+        System.out.println("Enter manufacturer to search: ");
+
+        String manufacturerToSearch = checkIfStringIsEntered();
+
+
+        List<Product> result = warehouseManager.searchByManufacturer(manufacturerToSearch);
+        if (!result.isEmpty()) {
+            for (Product product : result) {
+                System.out.println(product.getDeviceType());
+            }
+        }
+
+    }
+
+    private void searchBySellingPrice() {
+        System.out.println("Enter selling price to search: ");
+        int sellingPriceToSearch = checkIfIntEntered();
+
+        List<Product> result = warehouseManager.searchBySellingPrice(sellingPriceToSearch);
+        if (!result.isEmpty()) {
+            for (Product product : result) {
+                System.out.println(product.getSellingPrice());
+            }
         }
     }
 
 
-
-        private void searchByPurchasePrice () {
-            System.out.println("Enter purchase price to search: ");
-            double purchasePriceToSearch = chechIfDoubleEntered();
-
-            List<Product> result = warehouseManager.searchBySellingPrice(purchasePriceToSearch);
-            if (!result.isEmpty()) {
-                for (Product product : result) {
-                    System.out.println(product);
-                }
-            }
-
+    private int checkIfIntEntered() {
+        try {
+            return scanner.nextInt();
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please enter a number.");
+            return scanner.nextInt();
         }
+    }
 
-
-        private void searchByManufacturer () {
-            System.out.println("Enter manufacturer to search: ");
-            String manufacturerToSearch = checkIfStringEntered();
-
-            List<Product> result = warehouseManager.searchByManufacturer(manufacturerToSearch);
-            if (!result.isEmpty()) {
-                for (Product product : result) {
-                    System.out.println(product.getDeviceType());
-                }
-            }
-
+    private Double checkIfDoubleIsEntered() {
+        try {
+            return Double.parseDouble(scanner.next());
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please re-enter.");
+            return Double.parseDouble(scanner.next());
         }
-
-        private void searchBySellingPrice () {
-            System.out.println("Enter selling price to search: ");
-            int sellingPriceToSearch = checkIfIntEntered();
-
-            List<Product> result = warehouseManager.searchBySellingPrice(sellingPriceToSearch);
-            if (!result.isEmpty()) {
-                for (Product product : result) {
-                    System.out.println(product.getSellingPrice());
-                }
-            }
+    }
+    private String checkIfStringIsEntered() {
+        try {
+            return scanner.next();
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please re-enter.");
+            return scanner.next();
         }
+    }
 
-
-        private int checkIfIntEntered () {
-            try {
-                return scanner.nextInt();
-            } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a number.");
-                return scanner.nextInt();
-            }
+    private Double checkIfDoubleIsEntered() {
+        try {
+            return Double.parseDouble(scanner.next());
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please re-enter.");
+            return checkIfDoubleIsEntered;
         }
+    }
 
-
-        private Double checkIfDoubleIsEntered () {
-            try {
-                return Double.parseDouble(scanner.next());
-            } catch (Exception e) {
-                System.out.println("Invalid input. Please re-enter.");
-                return checkIfDoubleIsEntered;
-            }
-        }
-
-        private Double calculateCartTotal(){
-            return cart.calculateTotal();
-        }
-
-        private Double calculateMidTotal(){
-        return cart.calculateMidPrice();
-        }
-
-        private void finalizeSale(){
-        double total= calculateCartTotal();
-        cart.clearCart();
-            System.out.println("Sale finalized. Your total payed is " + total);
-        }
-
-
-
-
-}
+    }

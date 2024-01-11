@@ -8,8 +8,8 @@ class Warehouse {
         this.scaffoldItems.addAll(getInventory());
     }
 
-    public void addProduct(Product product, int quantityToAdd) {
-        Product productToUodate = scaffoldItems.stream().filter(productToCheck -> productToCheck == product).toList().getFirst();
+    public void addQuantityProduct(Product product, int quantityToAdd) {
+        Product productToUodate = scaffoldItems.stream().filter(productToCheck -> productToCheck == product).collect(Collectors.toList()).getFirst();
         scaffoldItems.remove(productToUodate);
         productToUodate.setQuantity(productToUodate.getQuantity()+quantityToAdd);
         scaffoldItems.add(productToUodate);
@@ -20,8 +20,8 @@ class Warehouse {
 
 
 
-    public Boolean removeProduct(int productToRemove) {
-        return scaffoldItems.removeIf(product -> product.getProductId()Id() == productToRemove);
+    public Boolean removeProduct(int deviceToRemove) {
+        return scaffoldItems.removeIf(device -> device.getProductId() == deviceToRemove);
     }
 
     public List<Product> getInventory() {

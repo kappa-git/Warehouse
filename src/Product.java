@@ -13,7 +13,7 @@ class Product {
 
     public Product (String deviceType, String manufacturer, String model, String description,
                    double displaySize, int storageSize, double purchasePrice,
-                   double sellingPrice, int productId) {
+                   double sellingPrice, int deviceId) {
         this.deviceType = deviceType;
         this.manufacturer = manufacturer;
         this.model = model;
@@ -71,10 +71,6 @@ class Product {
 
     public double getSellingPrice() {
         return sellingPrice;
-    }
-
-    public int productId() {
-        return productId;
     }
 
     public int getProductId() {
