@@ -6,6 +6,7 @@ public class Menu {
     private WarehouseManager warehouseManager;
     private CartManager cartManager;
     private Scanner scanner = new Scanner(System.in);
+    private Cart cart;
 
 
     public Menu(WarehouseManager warehouseManager, CartManager cartManager) {
@@ -115,7 +116,7 @@ public class Menu {
 
 
         Product product = warehouseManager.searchById(deviceIdToAddToCart);
-        if (product != null && cartManager.addToCart(product)) {
+        if (product != null && cart.addToCart(product)) {
             System.out.println("Product is added to cart");
             start();
         } else {
@@ -201,6 +202,19 @@ public class Menu {
             System.out.println("Invalid input. Please re-enter.");
             return scanner.next();
         }
+    }
+    private Double calculateCartTotal(){
+        return cart.calculateTotal();
+    }
+
+    private Double calculateMidTotal(){
+        return cart.calculateMidPrice();
+    }
+
+    private void finalizeSale(){
+        double total= calculateCartTotal();
+        cart.clearCart();
+        System.out.println("Sale finalized. Your total payed is " + total);
     }
 
 
