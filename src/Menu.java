@@ -210,7 +210,9 @@ public class Menu {
     private Double calculateMidTotal(){
         return cart.calculateMidPrice();
     }
-
+    private void removeFromCart(){
+        cart.removeProduct();
+    }
     private void finalizeSale(){
         double total= calculateCartTotal();
         cart.clearCart();

@@ -3,6 +3,7 @@ import java.util.Iterator;
 import java.util.List;
 
 class Cart {
+    private int productToRemoveId;
     private final List<Product> cartItems = new ArrayList<>();
 
     public Boolean addToCart(Product product) {
@@ -13,15 +14,18 @@ class Cart {
         }
     }
 
-    public boolean removeFromCart(Integer productID, Integer quantity) {
-        if (productID != null){
-
-            cartItems.stream().filter(product -> product.getProductId() == productID);
-            return  true;
-        } else{
-            return false;
-        }
-    }
+//    public boolean removeFromCart(Integer productID, Integer quantity) {
+//        if (productID != null){
+//
+//            cartItems.stream().filter(product -> product.getProductId() == productID);
+//            return  true;
+//        } else{
+//            return false;
+//        }
+//    }
+public boolean removeProduct() {
+    return cartItems.removeIf(product -> product.getProductId() == productToRemoveId);
+}
 
     public double calculateTotal() {
         return cartItems.stream().mapToDouble(Product::getSellingPrice).sum();
