@@ -115,7 +115,7 @@ public class Menu {
 
 
         Product product = warehouseManager.searchById(deviceIdToAddToCart);
-        if (product != null && cartManager.addToCart(product)) {
+        if (product != null && cart.addToCart(product)) {
             System.out.println("Product is added to cart");
             start();
         } else {
