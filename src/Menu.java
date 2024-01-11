@@ -51,7 +51,7 @@ public class Menu {
         return switch (choice) {
             case 1 -> MenuChoice.PrintProduct;
             case 2 -> MenuChoice.AddToWareHouse;
-            case 3 -> MenuChoice.RemoveFromWarehouse;
+            case 3 -> MenuChoice.RemoveFromWareHouse;
             case 4 -> MenuChoice.AddToCart;
             case 5 -> MenuChoice.RemoveFromCart;
             case 6 -> MenuChoice.CalculateCartTotal;
@@ -66,9 +66,9 @@ public class Menu {
 
     private void doTheChoice(MenuChoice menuChoice) {
         switch (menuChoice) {
-            case PrintProduct -> printEd();
-            case AddToWareHouse -> addToWarehouse();
-            case RemoveFromWarehouse -> removeFromWarehouse();
+            case PrintProduct -> printProducts();
+            case AddToWareHouse -> addToWareHouse();
+            case RemoveFromWareHouse -> removeFromWareHouse();
             case AddToCart -> addToCart();
             case RemoveFromCart -> removeFromCart();
             case CalculateCartTotal -> calculateCartTotal();
@@ -128,8 +128,8 @@ public class Menu {
     private Double calculateCartTotal(){
         return cart.calculateTotal();
     }
-    private Double removeFromCart(){
-        return cart.removeFromCart();
+    private boolean removeFromCart(){
+        return cartManager.removeFromCart();
     }
 
     private Double calculateMidTotal(){
@@ -221,13 +221,5 @@ public class Menu {
         }
     }
 
-    private Double checkIfDoubleIsEntered() {
-        try {
-            return Double.parseDouble(scanner.next());
-        } catch (Exception e) {
-            System.out.println("Invalid input. Please re-enter.");
-            return checkIfDoubleIsEntered;
-        }
-    }
 
     }
