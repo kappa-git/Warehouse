@@ -13,7 +13,7 @@ class Cart {
         }
     }
 
-    public boolean removeFromCart(Integer productID, Integer quantity) {
+    public boolean removeProductFromCart(Integer productID, Integer quantity) {
         if (productID != null){
 
             cartItems.stream().filter(product -> product.getProductId() == productID);

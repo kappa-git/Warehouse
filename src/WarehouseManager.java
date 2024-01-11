@@ -1,6 +1,4 @@
-import java.awt.Menu;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -55,22 +53,20 @@ class WarehouseManager {
     }
 
     public Product searchById (Integer id){
-        Product result = warehouse.getItems().stream().filter(product -> Objects.equals(product.getProductId(), id)).collect(Collectors.toList()).getFirst();
+        Product result = warehouse.getItems().stream().filter(product -> Objects.equals(product.getProductId(), id)).toList().getFirst();
 
         System.out.println("LOG - WAREHOUSEMANAGER - products filtered by ID. Products: " + result);
         return result;
     }
 
-    public Boolean addToWarehouse(int deviceIdToAdd, int quantityToAdd) {
-        Product product = warehouse.getItems().stream().filter(productToFind -> productToFind.getProductId() == deviceIdToAdd).collect(Collectors.toList()).getFirst();
+    public void addToWarehouse(int deviceIdToAdd, int quantityToAdd) {
+        Product product = warehouse.getItems().stream().filter(productToFind -> productToFind.getProductId() == deviceIdToAdd).toList().getFirst();
 
         if (product != null) {
             warehouse.addQuantityProduct(product, quantityToAdd);
             System.out.println("LOG - WAREHOUSEMANAGER - Product added.");
-            return true;
         } else {
             System.out.println("LOG - WAREHOUSEMANAGER - Product not added.");
-            return false;
         }
     }
 
