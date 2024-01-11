@@ -6,6 +6,7 @@ public class Menu {
     private WarehouseManager warehouseManager;
     private CartManager cartManager;
     private Scanner scanner = new Scanner(System.in);
+    private Cart cart;
 
 
     public Menu(WarehouseManager warehouseManager, CartManager cartManager) {
@@ -65,9 +66,9 @@ public class Menu {
 
     private void doTheChoice(MenuChoice menuChoice) {
         switch (menuChoice) {
-            case PrintProduct -> printEd();
-            case AddToWareHouse -> addToWarehouse();
-            case RemoveFromWarehouse -> removeFromWarehouse();
+            case PrintProduct -> printProducts();
+            case AddToWareHouse -> addToWareHouse();
+            case RemoveFromWareHouse -> removeFromWareHouse();
             case AddToCart -> addToCart();
             case RemoveFromCart -> removeFromCart();
             case CalculateCartTotal -> calculateCartTotal();
@@ -211,5 +212,19 @@ public class Menu {
             return checkIfDoubleIsEntered;
         }
     }
-
+    private Double calculateCartTotal(){
+        return cart.calculateTotal();
     }
+
+    private Double calculateMidTotal(){
+        return cart.calculateMidPrice();
+    }
+
+    private void finalizeSale(){
+        double total= calculateCartTotal();
+        cart.clearCart();
+        System.out.println("Sale finalized. Your total payed is " + total);
+    }
+
+
+}
