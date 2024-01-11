@@ -1,8 +1,8 @@
 public enum MenuChoice {
 
     PrintProduct,
-    AddToWarehouse,
-    RemoveFromWarehouse,
+    AddToWareHouse,
+    RemoveFromWareHouse,
     AddToCart,
     RemoveFromCart,
     CalculateMidTotal,
