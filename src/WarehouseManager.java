@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 class WarehouseManager {
@@ -51,14 +53,20 @@ class WarehouseManager {
         System.out.println("Sale finalized. Cart cleared.");
     }
 
-    public Product searchById(int productId, List<Product> products) {
-        for (Product product : products) {
-            if (product.getProductId() == (productId)) {
-                return product;
-            }
-        }
+//    public Product searchById(Product productId, List<Product> products) {
+//        for (Product product : products) {
+//            if (product.getProductId() == (productId)) {
+//                return product;
+//            }
+//        }
+//
+//        return null;
+//    }
+    public Product searchById (Integer id){
+        Product result = warehouse.getItems().stream().filter(product -> Objects.equals(product.getProductId(), id)).collect(Collectors.toList()).getFirst();
 
-        return null;
+        System.out.println("LOG - WAREHOUSEMANAGER - products filtered by ID. Products: " + result);
+        return result;
     }
 
     public Boolean addToWarehouse(int deviceIdToAdd, int quantityToAdd) {
