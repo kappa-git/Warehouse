@@ -26,9 +26,12 @@ class Product {
         this.quantity = 0;
     }
 
-    public Product (Product product) {
+    public Product(Product product) {
 
     }
+//    public void increaseQuantity(int incremento) {
+//        this.quantity += incremento;
+//    }
 
     public int getQuantity() {
         return quantity;
@@ -70,11 +73,7 @@ class Product {
         return sellingPrice;
     }
 
-    public int deviceId() {
-        return productId;
-    }
-
-    public int getDeviceId() {
+    public int getProductId() {
         return productId;
     }
 
@@ -110,7 +109,7 @@ class Product {
         this.sellingPrice = sellingPrice;
     }
 
-    public void setDeviceId(int deviceId) {
-        this.productId = deviceId;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }

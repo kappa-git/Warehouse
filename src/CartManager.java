@@ -6,7 +6,7 @@ public class CartManager {
     Cart cart;
     public void addToCart(int productId) {
 
-        Product product = warehouseManager.searchById(productId, warehouse.getInventory());
+        Product product = warehouseManager.searchById(productId);
         if (product != null && product.getQuantity() > 0) {
             cart.addToCart(product);
             warehouseManager.removeFromWarehouse(productId);
@@ -16,7 +16,7 @@ public class CartManager {
         }
     }
     public void removeFromCart(int productId) {
-        Product product = warehouseManager.searchById(productId, cart.getCartItems());
+        Product product = warehouseManager.searchById(productId);
         if (product != null) {
             cart.removeFromCart(productId, product.getQuantity());
             warehouseManager.addToWarehouse(productId, product.getQuantity());

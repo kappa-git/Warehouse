@@ -8,7 +8,7 @@ class Warehouse {
         this.scaffoldItems.addAll(getInventory());
     }
 
-    public void addProduct(Product product, int quantityToAdd) {
+    public void addQuantityProduct(Product product, int quantityToAdd) {
         Product productToUodate = scaffoldItems.stream().filter(productToCheck -> productToCheck == product).collect(Collectors.toList()).getFirst();
         scaffoldItems.remove(productToUodate);
         productToUodate.setQuantity(productToUodate.getQuantity()+quantityToAdd);
