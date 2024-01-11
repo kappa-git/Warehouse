@@ -6,7 +6,6 @@ public class Menu {
     private WarehouseManager warehouseManager;
     private CartManager cartManager;
     private Scanner scanner = new Scanner(System.in);
-    private Cart cart;
 
 
     public Menu(WarehouseManager warehouseManager, CartManager cartManager) {
@@ -51,7 +50,7 @@ public class Menu {
         return switch (choice) {
             case 1 -> MenuChoice.PrintProduct;
             case 2 -> MenuChoice.AddToWareHouse;
-            case 3 -> MenuChoice.RemoveFromWarehouse;
+            case 3 -> MenuChoice.RemoveFromWareHouse;
             case 4 -> MenuChoice.AddToCart;
             case 5 -> MenuChoice.RemoveFromCart;
             case 6 -> MenuChoice.CalculateCartTotal;
@@ -116,7 +115,7 @@ public class Menu {
 
 
         Product product = warehouseManager.searchById(deviceIdToAddToCart);
-        if (product != null && cart.addToCart(product)) {
+        if (product != null && cartManager.addToCart(product)) {
             System.out.println("Product is added to cart");
             start();
         } else {
@@ -204,27 +203,5 @@ public class Menu {
         }
     }
 
-    private Double checkIfDoubleIsEntered() {
-        try {
-            return Double.parseDouble(scanner.next());
-        } catch (Exception e) {
-            System.out.println("Invalid input. Please re-enter.");
-            return checkIfDoubleIsEntered;
-        }
-    }
-    private Double calculateCartTotal(){
-        return cart.calculateTotal();
-    }
 
-    private Double calculateMidTotal(){
-        return cart.calculateMidPrice();
     }
-
-    private void finalizeSale(){
-        double total= calculateCartTotal();
-        cart.clearCart();
-        System.out.println("Sale finalized. Your total payed is " + total);
-    }
-
-
-}
