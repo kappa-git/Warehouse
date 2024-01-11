@@ -13,7 +13,7 @@ class Product {
 
     public Product (String deviceType, String manufacturer, String model, String description,
                    double displaySize, int storageSize, double purchasePrice,
-                   double sellingPrice, int deviceId) {
+                   double sellingPrice, int productId) {
         this.deviceType = deviceType;
         this.manufacturer = manufacturer;
         this.model = model;

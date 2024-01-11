@@ -6,6 +6,7 @@ public class Menu {
     private WarehouseManager warehouseManager;
     private CartManager cartManager;
     private Scanner scanner = new Scanner(System.in);
+    private Cart cart;
 
 
     public Menu(WarehouseManager warehouseManager, CartManager cartManager) {
@@ -123,6 +124,23 @@ public class Menu {
             System.out.println("Product is NOT added to cart, please retry");
             start();
         }
+    }
+
+    private Double calculateCartTotal(){
+        return cart.calculateTotal();
+    }
+    private Double removeFromCart(){
+        return cart.removeFromCart();
+    }
+
+    private Double calculateMidTotal(){
+        return cart.calculateMidPrice();
+    }
+
+    private void finalizeSale(){
+        double total= calculateCartTotal();
+        cart.clearCart();
+        System.out.println("Sale finalized. Your total payed is " + total);
     }
 //        private void removeFromCart(){
 //            System.out.println("Enter device ID to remove from cart: ");
