@@ -20,8 +20,8 @@ class Warehouse {
 
 
 
-    public Boolean removeProduct(int deviceToRemove) {
-        return scaffoldItems.removeIf(device -> device.getDeviceId() == deviceToRemove);
+    public Boolean removeProduct(int productToRemove) {
+        return scaffoldItems.removeIf(product -> product.getProductId()Id() == productToRemove);
     }
 
     public List<Product> getInventory() {

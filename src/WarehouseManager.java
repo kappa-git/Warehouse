@@ -13,7 +13,7 @@ class WarehouseManager {
 
     public void printProducts() {
         warehouse.getInventory().forEach(device ->
-                System.out.println("ID: " + device.getDeviceId() + ", Type: " + device.getDeviceType()
+                System.out.println("ID: " + device.getProductId() + ", Type: " + device.getDeviceType()
                         + ", Manufacturer: " + device.getManufacturer() + ", Model: " + device.getModel()
                         + ", Selling Price: " + device.getSellingPrice() + ", Display Size: " + device.getDisplaySize() + ",\n"
                         + "          Storage Size: " + device.getStorageSize() + ", Purchase Price: " + device.getPurchasePrice()
@@ -21,7 +21,7 @@ class WarehouseManager {
     }
     public void getItemInCart() {
         cart.getCartItems().forEach(device ->
-                System.out.println("ID: " + device.getDeviceId() + ", Type: " + device.getDeviceType()
+                System.out.println("ID: " + device.getProductId() + ", Type: " + device.getDeviceType()
                         + ", Manufacturer: " + device.getManufacturer() + ", Model: " + device.getModel()
                         + ", Selling Price: " + device.getSellingPrice() + ", Display Size: " + device.getDisplaySize() + ",\n"
                         + "          Storage Size: " + device.getStorageSize() + ", Purchase Price: " + device.getPurchasePrice()
@@ -70,7 +70,7 @@ class WarehouseManager {
 
     public Product findProductById(int deviceId, List<Product> devices) {
         for (Product product : devices) {
-            if (product.getDeviceId() == (deviceId)) {
+            if (product.productId() == (deviceId)) {
                 return product;
             }
         }
@@ -87,7 +87,7 @@ class WarehouseManager {
 
             warehouse.addProduct(product);
 
-            System.out.println("Product added to the warehouse: " + device);
+            System.out.println("Product added to the warehouse: " + product);
         } else {
             System.out.println("Product not found in the inventory.");
         }

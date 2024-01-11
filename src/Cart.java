@@ -15,7 +15,7 @@ class Cart {
 
     public Boolean removeFromCart(Integer productID, Integer quantity) {
         if (productID != null){
-            Product toRemove = cartItems.stream().filter(product -> product.getProductID() == product);
+            Product toRemove = cartItems.stream().filter(product -> product.getProductId() == product);
             return  cartItems.remove(toRemove);
         } else{
             return false;
