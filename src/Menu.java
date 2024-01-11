@@ -46,12 +46,11 @@ public class Menu {
         }
     }
 
-
     private MenuChoice checkInputChoice(Integer choice) {
         return switch (choice) {
             case 1 -> MenuChoice.PrintProduct;
             case 2 -> MenuChoice.AddToWareHouse;
-            case 3 -> MenuChoice.RemoveFromWareHouse;
+            case 3 -> MenuChoice.RemoveFromWarehouse;
             case 4 -> MenuChoice.AddToCart;
             case 5 -> MenuChoice.RemoveFromCart;
             case 6 -> MenuChoice.CalculateCartTotal;
@@ -66,9 +65,9 @@ public class Menu {
 
     private void doTheChoice(MenuChoice menuChoice) {
         switch (menuChoice) {
-            case PrintProduct -> printProducts();
-            case AddToWareHouse -> addToWareHouse();
-            case RemoveFromWareHouse -> removeFromWareHouse();
+            case PrintProduct -> printEd();
+            case AddToWareHouse -> addToWarehouse();
+            case RemoveFromWarehouse -> removeFromWarehouse();
             case AddToCart -> addToCart();
             case RemoveFromCart -> removeFromCart();
             case CalculateCartTotal -> calculateCartTotal();
@@ -152,7 +151,9 @@ public class Menu {
 
     private void searchByManufacturer() {
         System.out.println("Enter manufacturer to search: ");
+
         String manufacturerToSearch = checkIfStringIsEntered();
+
 
         List<Product> result = warehouseManager.searchByManufacturer(manufacturerToSearch);
         if (!result.isEmpty()) {
@@ -202,5 +203,13 @@ public class Menu {
         }
     }
 
+    private Double checkIfDoubleIsEntered() {
+        try {
+            return Double.parseDouble(scanner.next());
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please re-enter.");
+            return checkIfDoubleIsEntered;
+        }
+    }
 
-}
+    }

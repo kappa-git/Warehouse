@@ -1,3 +1,4 @@
+import java.awt.Menu;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -53,15 +54,6 @@ class WarehouseManager {
         System.out.println("Sale finalized. Cart cleared.");
     }
 
-//    public Product searchById(Product productId, List<Product> products) {
-//        for (Product product : products) {
-//            if (product.getProductId() == (productId)) {
-//                return product;
-//            }
-//        }
-//
-//        return null;
-//    }
     public Product searchById (Integer id){
         Product result = warehouse.getItems().stream().filter(product -> Objects.equals(product.getProductId(), id)).collect(Collectors.toList()).getFirst();
 
