@@ -4,16 +4,17 @@ public class CartManager {
     Warehouse warehouse;
     WarehouseManager warehouseManager;
     Cart cart;
-    public void addToCart(int productId) {
+    public void addToCart(int product) {
 
-        Product product = warehouseManager.searchById(productId);
+        Product product = warehouseManager.searchById(product);
         if (product != null && product.getQuantity() > 0) {
             cart.addToCart(product);
-            warehouseManager.removeFromWarehouse(productId);
+            warehouseManager.removeFromWarehouse(product);
             System.out.println("Product added to cart.");
         } else {
             System.out.println("Product not found in the warehouse.");
         }
+        return product;
     }
     public void removeFromCart(int productId) {
         Product product = warehouseManager.searchById(productId);
