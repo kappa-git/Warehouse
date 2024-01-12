@@ -10,9 +10,11 @@ public class Menu {
     private Product product;
 
 
-    public Menu(WarehouseManager warehouseManager, CartManager cartManager) {
+    public Menu(WarehouseManager warehouseManager, CartManager cartManager, Cart cart, Product product) {
         this.cartManager = cartManager;
         this.warehouseManager = warehouseManager;
+        this.cart = cart;
+        this.product = product;
     }
 
     public void start() {
