@@ -6,11 +6,15 @@ public class Menu {
     private WarehouseManager warehouseManager;
     private CartManager cartManager;
     private Scanner scanner = new Scanner(System.in);
+    private Cart cart;
+    private Product product;
 
 
-    public Menu(WarehouseManager warehouseManager, CartManager cartManager) {
+    public Menu(WarehouseManager warehouseManager, CartManager cartManager, Cart cart, Product product) {
         this.cartManager = cartManager;
         this.warehouseManager = warehouseManager;
+        this.cart = cart;
+        this.product = product;
     }
 
     public void start() {
@@ -115,13 +119,46 @@ public class Menu {
 
 
         Product product = warehouseManager.searchById(deviceIdToAddToCart);
-        if (product != null && cartManager.addToCart(product)) {
+        if (product != null && cart.addToCart(product)) {
             System.out.println("Product is added to cart");
             start();
         } else {
             System.out.println("Product is NOT added to cart, please retry");
             start();
         }
+    }
+
+    private Double calculateCartTotal(){
+        return cart.calculateTotal();
+    }
+    private void removeFromCart() {
+        System.out.println("Enter device ID to add to cart: ");
+        int deviceIdToRemoveToCart;
+
+        deviceIdToRemoveToCart = checkIfIntEntered();
+
+        warehouseManager.searchById(deviceIdToRemoveToCart);
+        int quantity = product.getQuantity();
+        Integer productId = product.getProductId();
+        if (deviceIdToRemoveToCart == productId) {
+            if (product != null && cart.removeProductFromCart(productId, quantity)) {
+                System.out.println("Product is added to cart");
+                start();
+            } else {
+                System.out.println("Product is NOT added to cart, please retry");
+                start();
+            }
+        }
+    }
+
+    private Double calculateMidTotal(){
+        return warehouseManager.calculateMidPrice();
+    }
+
+    private void finalizeSale(){
+        double total= calculateCartTotal();
+        cart.clearCart();
+        System.out.println("Sale finalized. Your total payed is " + total);
     }
 //        private void removeFromCart(){
 //            System.out.println("Enter device ID to remove from cart: ");
@@ -202,6 +239,4 @@ public class Menu {
             return scanner.next();
         }
     }
-
-
-    }
+}

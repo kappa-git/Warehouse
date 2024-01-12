@@ -9,10 +9,10 @@ class Warehouse {
     }
 
     public void addQuantityProduct(Product product, int quantityToAdd) {
-        Product productToUodate = scaffoldItems.stream().filter(productToCheck -> productToCheck == product).collect(Collectors.toList()).getFirst();
-        scaffoldItems.remove(productToUodate);
-        productToUodate.setQuantity(productToUodate.getQuantity()+quantityToAdd);
-        scaffoldItems.add(productToUodate);
+        Product productToUpdate = scaffoldItems.stream().filter(productToCheck -> productToCheck == product).collect(Collectors.toList()).getFirst();
+        scaffoldItems.remove(productToUpdate);
+        productToUpdate.setQuantity(productToUpdate.getQuantity()+quantityToAdd);
+        scaffoldItems.add(productToUpdate);
         System.out.println("LOG - Warehouse - Product added to the Warehouse");
     }
 

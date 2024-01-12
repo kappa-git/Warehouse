@@ -13,12 +13,11 @@ class Cart {
         }
     }
 
-    public boolean removeFromCart(Integer productID, Integer quantity) {
-        if (productID != null){
+    public Boolean removeProductFromCart(Integer productId, Integer quantity) {
+        if (productId != null) {
+            return cartItems.removeIf(product -> product.getProductId() == productId && (quantity == null || quantity<= 0 || product.getQuantity()<= quantity));
 
-            cartItems.stream().filter(product -> product.getProductId() == productID);
-            return  true;
-        } else{
+        } else {
             return false;
         }
     }
