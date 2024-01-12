@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 class Cart {
@@ -26,9 +25,8 @@ class Cart {
         return cartItems.stream().mapToDouble(Product::getSellingPrice).sum();
     }
 
-    public boolean clearCart() {
+    public void clearCart() {
         cartItems.clear();
-        return cartItems.isEmpty();
     }
 
     public List<Product> getCartItems() {
