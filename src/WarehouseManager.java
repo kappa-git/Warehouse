@@ -1,9 +1,14 @@
+import java.awt.Menu;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 class WarehouseManager {
     private Warehouse warehouse;
     private Cart cart;
+
 
     public WarehouseManager() {
         this.warehouse = new Warehouse();
@@ -12,7 +17,7 @@ class WarehouseManager {
 
     public void printProducts() {
         warehouse.getInventory().forEach(device ->
-                System.out.println("ID: " + device.getDeviceId() + ", Type: " + device.getDeviceType()
+                System.out.println("ID: " + device.getProductId() + ", Type: " + device.getDeviceType()
                         + ", Manufacturer: " + device.getManufacturer() + ", Model: " + device.getModel()
                         + ", Selling Price: " + device.getSellingPrice() + ", Display Size: " + device.getDisplaySize() + ",\n"
                         + "          Storage Size: " + device.getStorageSize() + ", Purchase Price: " + device.getPurchasePrice()
@@ -20,7 +25,7 @@ class WarehouseManager {
     }
     public void getItemInCart() {
         cart.getCartItems().forEach(device ->
-                System.out.println("ID: " + device.getDeviceId() + ", Type: " + device.getDeviceType()
+                System.out.println("ID: " + device.getProductId() + ", Type: " + device.getDeviceType()
                         + ", Manufacturer: " + device.getManufacturer() + ", Model: " + device.getModel()
                         + ", Selling Price: " + device.getSellingPrice() + ", Display Size: " + device.getDisplaySize() + ",\n"
                         + "          Storage Size: " + device.getStorageSize() + ", Purchase Price: " + device.getPurchasePrice()
@@ -29,31 +34,16 @@ class WarehouseManager {
 
 
 
-    public void removeFromWarehouse(int deviceId) {
-        warehouse.removeProduct(deviceId);
+    public void removeFromWarehouse(int productId) {
+        warehouse.removeProduct(productId);
+    }
+    public void removeFromCart(int productId, int quantity) {
+        cart.removeProductFromCart(productId, quantity);
     }
 
-    public void addToCart(int deviceId) {
-        Device device = findProductById(deviceId, warehouse.getInventory());
-        if (device != null && device.getQuantity() > 0) {
-            cart.addToCart(device);
-            removeFromWarehouse(deviceId);
-            System.out.println("Product added to cart.");
-        } else {
-            System.out.println("Product not found in the warehouse.");
-        }
-    }
 
-    public void removeFromCart(int deviceId) {
-        Device device = findProductById(deviceId, cart.getCartItems());
-        if (device != null) {
-            cart.removeFromCart(deviceId);
-            addToWarehouse(deviceId, 1);
-            System.out.println("Product removed from cart.");
-        } else {
-            System.out.println("Product not found in the cart.");
-        }
-    }
+
+
     public double calculateMidPrice() {
         return cart.calculateMidPrice();
     }
@@ -67,37 +57,32 @@ class WarehouseManager {
         System.out.println("Sale finalized. Cart cleared.");
     }
 
-    private Device findProductById(int deviceId, List<Device> devices) {
-        for (Device device : devices) {
-            if (device.getDeviceId() == (deviceId)) {
-                return device;
-            }
-        }
+    public Product searchById (Integer id){
+        Product result = warehouse.getItems().stream().filter(product -> Objects.equals(product.getProductId(), id)).collect(Collectors.toList()).getFirst();
 
-        return null;
+        System.out.println("LOG - WAREHOUSEMANAGER - products filtered by ID. Products: " + result);
+        return result;
     }
 
-    public void addToWarehouse(int deviceIdToAdd, int quantityToAdd) {
-        Device device = findProductById(deviceIdToAdd, warehouse.getInventory());
+    public Boolean addToWarehouse(int deviceIdToAdd, int quantityToAdd) {
+        Product product = warehouse.getItems().stream().filter(productToFind -> productToFind.getProductId() == deviceIdToAdd).collect(Collectors.toList()).getFirst();
 
-        if (device != null) {
-            int currentQuantity = device.getQuantity();
-            device.setQuantity(currentQuantity + quantityToAdd);
-
-            warehouse.addProduct(device);
-
-            System.out.println("Product added to the warehouse: " + device);
+        if (product != null) {
+            warehouse.addQuantityProduct(product, quantityToAdd);
+            System.out.println("LOG - WAREHOUSEMANAGER - Product added.");
+            return true;
         } else {
-            System.out.println("Product not found in the inventory.");
+            System.out.println("LOG - WAREHOUSEMANAGER - Product not added.");
+            return false;
         }
     }
 
-    public  List<Device> searchByDevice(String type){
-        List<Device> results = new ArrayList<>();
+    public  List<Product> searchByDevice(String type){
+        List<Product> results = new ArrayList<>();
 
-        for (Device device : warehouse.getInventory()) {
-            if (device.getDeviceType().equalsIgnoreCase(String.valueOf(type))){
-                results.add(device);
+        for (Product product : warehouse.getInventory()) {
+            if (product.getDeviceType().equalsIgnoreCase(String.valueOf(type))){
+                results.add(product);
             }
         }
         if (results.isEmpty()){
@@ -105,12 +90,12 @@ class WarehouseManager {
         }
         return results;
     }
-    public List<Device> searchByManufacturer(String manufacturer) {
-        List<Device> searchResults = new ArrayList<>();
+    public List<Product> searchByManufacturer(String manufacturer) {
+        List<Product> searchResults = new ArrayList<>();
 
-        for (Device device : warehouse.getInventory()) {
-            if (device.getManufacturer().equalsIgnoreCase(manufacturer)) {
-                searchResults.add(device);
+        for (Product product : warehouse.getInventory()) {
+            if (product.getManufacturer().equalsIgnoreCase(manufacturer)) {
+                searchResults.add(product);
             }
         }
 
@@ -120,12 +105,12 @@ class WarehouseManager {
 
         return searchResults;
     }
-    public List<Device> searchBySellingPrice(double sellingPrice) {
-        List<Device> searchPrice = new ArrayList<>();
+    public List<Product> searchBySellingPrice(double sellingPrice) {
+        List<Product> searchPrice = new ArrayList<>();
 
-        for (Device device : warehouse.getInventory()) {
-            if (device.getSellingPrice() == sellingPrice) {
-                searchPrice.add(device);
+        for (Product product : warehouse.getInventory()) {
+            if (product.getSellingPrice() == sellingPrice) {
+                searchPrice.add(product);
             }
         }
 
@@ -135,12 +120,12 @@ class WarehouseManager {
         return searchPrice;
     }
 
-    public List<Device> searchByPurchasePrice (double purchasePrice){
-        List<Device> searchPurchasePrice = new ArrayList<>();
+    public List<Product> searchByPurchasePrice (double purchasePrice){
+        List<Product> searchPurchasePrice = new ArrayList<>();
 
-        for (Device device : warehouse.getInventory()) {
-            if (device.getPurchasePrice() == purchasePrice) {
-                searchPurchasePrice.add(device);
+        for (Product product : warehouse.getInventory()) {
+            if (product.getPurchasePrice() == purchasePrice) {
+                searchPurchasePrice.add(product);
             }
         }
 
@@ -149,13 +134,13 @@ class WarehouseManager {
         }
         return searchPurchasePrice;
     }
-    public List<Device> searchByRangeOfPrice (double purchaseminPrice, double purchasemaxPrice){
-        List<Device> searchByRangeOfPrice = new ArrayList<>();
+    public List<Product> searchByRangeOfPrice (double purchaseminPrice, double purchasemaxPrice){
+        List<Product> searchByRangeOfPrice = new ArrayList<>();
 
-        for (Device device : warehouse.getInventory()) {
-            double purchasePrice= device.getPurchasePrice();
+        for (Product product : warehouse.getInventory()) {
+            double purchasePrice= product.getPurchasePrice();
             if (purchasePrice >= purchaseminPrice && purchasePrice <= purchasemaxPrice) {
-                searchByRangeOfPrice.add(device);
+                searchByRangeOfPrice.add(product);
             }
         }
 
@@ -165,12 +150,12 @@ class WarehouseManager {
         return searchByRangeOfPrice;
     }
 
-    public List<Device> searchByModel (String model) {
-        List<Device> searchModel = new ArrayList<>();
+    public List<Product> searchByModel (String model) {
+        List<Product> searchModel = new ArrayList<>();
 
-        for (Device device : warehouse.getInventory()) {
-            if (device.getModel().equals(model)) {
-                searchModel.add(device);
+        for (Product product : warehouse.getInventory()) {
+            if (product.getModel().equals(model)) {
+                searchModel.add(product);
             }
         }
 

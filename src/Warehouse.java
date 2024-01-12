@@ -2,13 +2,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 class Warehouse {
-    private List<Device> scaffoldItems = new ArrayList<>();
+    private List<Product> scaffoldItems = new ArrayList<>();
 
     public Warehouse() {
         this.scaffoldItems.addAll(getInventory());
     }
 
-    public void addProduct(Product product, int quantityToAdd) {
+    public void addQuantityProduct(Product product, int quantityToAdd) {
         Product productToUodate = scaffoldItems.stream().filter(productToCheck -> productToCheck == product).collect(Collectors.toList()).getFirst();
         scaffoldItems.remove(productToUodate);
         productToUodate.setQuantity(productToUodate.getQuantity()+quantityToAdd);
@@ -21,10 +21,10 @@ class Warehouse {
 
 
     public Boolean removeProduct(int deviceToRemove) {
-        return scaffoldItems.removeIf(device -> device.getProductId() == deviceToRemove);
+        return scaffoldItems.removeIf(product -> product.getProductId() == deviceToRemove);
     }
 
-    public List<Device> getInventory() {
+    public List<Product> getInventory() {
         Notebook laptop = new Notebook("Notebook", "Asus", "ZenBook", "Non disponibile", 14, 1024, 850.00, 1000.00, 4431);
         Notebook laptop1 = new Notebook("Notebook", "Hp", "Pavilion Plus", "Non disponibile", 16, 2048, 780.00, 1199.00, 4432);
         Tablet tablet1 = new Tablet("Tablet", "Lenovo", "M10 plus", "Non disponibile", 10.6, 128, 300.00, 359.01, 1268);

@@ -1,4 +1,4 @@
-class Device {
+class Product {
 
     private String deviceType;
     private String manufacturer;
@@ -8,12 +8,14 @@ class Device {
     private int storageSize;
     private double purchasePrice;
     private double sellingPrice;
-    private int deviceId;
+    private int productId;
     private int quantity;
+    public Product (){
 
-    public Device (String deviceType, String manufacturer, String model, String description,
+    }
+    public Product (String deviceType, String manufacturer, String model, String description,
                    double displaySize, int storageSize, double purchasePrice,
-                   double sellingPrice, int deviceId) {
+                   double sellingPrice, int productId) {
         this.deviceType = deviceType;
         this.manufacturer = manufacturer;
         this.model = model;
@@ -22,16 +24,10 @@ class Device {
         this.storageSize = storageSize;
         this.purchasePrice = purchasePrice;
         this.sellingPrice = sellingPrice;
-        this.deviceId = deviceId;
+        this.productId = productId;
         this.quantity = 0;
     }
 
-    public Device(Device device) {
-
-    }
-//    public void increaseQuantity(int incremento) {
-//        this.quantity += incremento;
-//    }
 
     public int getQuantity() {
         return quantity;
@@ -73,12 +69,8 @@ class Device {
         return sellingPrice;
     }
 
-    public int deviceId() {
-        return deviceId;
-    }
-
-    public int getDeviceId() {
-        return deviceId;
+    public int getProductId() {
+        return productId;
     }
 
     public void setStorageSize(int storageSize) {
@@ -113,7 +105,7 @@ class Device {
         this.sellingPrice = sellingPrice;
     }
 
-    public void setDeviceId(int deviceId) {
-        this.deviceId = deviceId;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }
