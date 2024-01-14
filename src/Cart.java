@@ -2,11 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
-    private final List<Product> cartItems;
+    private final List<Product> cartItems = new ArrayList<>();
 
-    public Cart() {
-        this.cartItems = new ArrayList<>();
-    }
 
     public Boolean addToCart(Product product) {
         if (product != null){

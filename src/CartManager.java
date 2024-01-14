@@ -1,9 +1,7 @@
-import java.util.List;
-
 public class CartManager {
-    Warehouse warehouse;
-    WarehouseManager warehouseManager;
-    Cart cart;
+    private Warehouse warehouse;
+    private WarehouseManager warehouseManager;
+    private Cart cart;
     public void addToCart(int productId) {
 
         Product product = warehouseManager.searchById(productId);

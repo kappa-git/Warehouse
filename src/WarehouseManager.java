@@ -9,10 +9,6 @@ public class WarehouseManager {
     private Cart cart;
 
 
-    public WarehouseManager() {
-        this.warehouse = new Warehouse();
-        this.cart = new Cart();
-    }
 
     public void printProducts() {
         warehouse.getInventory().forEach(device ->
