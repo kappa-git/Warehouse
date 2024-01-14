@@ -14,11 +14,12 @@ public class CartManager {
         } else {
             System.out.println("Product not found in the warehouse.");
         }
+
     }
     public void removeFromCart(int productId) {
         Product product = warehouseManager.searchById(productId);
         if (product != null) {
-            cart.removeFromCart(productId, product.getQuantity());
+            cart.removeProductFromCart(productId, product.getQuantity());
             warehouseManager.addToWarehouse(productId, product.getQuantity());
             System.out.println("Product removed from cart.");
         } else {
