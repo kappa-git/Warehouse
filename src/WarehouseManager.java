@@ -4,8 +4,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 class WarehouseManager {
-    private Warehouse warehouse;
-    private Cart cart;
+    private final Warehouse warehouse;
+    private final Cart cart;
 
 
     public WarehouseManager() {
