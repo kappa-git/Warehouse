@@ -4,5 +4,4 @@ public class Notebook extends Product {
                     double sellingPrice, int productId) {
         super(deviceType, manufacturer, model, description, displaySize, storageSize, purchasePrice, sellingPrice, productId);
     }
-
 }

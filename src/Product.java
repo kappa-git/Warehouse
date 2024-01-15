@@ -26,6 +26,10 @@ class Product {
         this.quantity = 0;
     }
 
+    public Product() {
+
+    }
+
     public int getQuantity() {
         return quantity;
     }

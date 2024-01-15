@@ -5,3 +5,4 @@ public class Tablet extends Product {
         super(deviceType, manufacturer, model, description, displaySize, storageSize, purchasePrice, sellingPrice, productId);
     }
 }
+

@@ -14,6 +14,7 @@ public class CartManager {
         } else {
             System.out.println("Product not found in the warehouse.");
         }
+
     }
     public void removeFromCart(int productId) {
         Product product = warehouseManager.searchById(productId);
@@ -25,5 +26,4 @@ public class CartManager {
             System.out.println("Product not found in the cart.");
         }
     }
-
 }
