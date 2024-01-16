@@ -48,5 +48,25 @@ class WarehouseManagerTest {
            assertEquals(result, resultPrice);
 
     }
+    @Test
+    void checkIfSearchBySellingPriceInputIsNull(){
+        Double input = null;
+        WarehouseManager warehouseManager = new WarehouseManager();
+        assertThrows(NullPointerException.class, ()-> warehouseManager.searchBySellingPrice(input));
 
+    }
+    @Test
+    void checkIfSearchBySellingPriceReturnIsNotNull(){
+        WarehouseManager warehouseManager = new WarehouseManager();
+        Double input = 230.90;
+        List<Product> result = warehouseManager.searchBySellingPrice(input);
+        assertNotEquals(null, result);
+    }
+    @Test
+    void checkifSearchBySellingPriceInputIsNegative(){
+        WarehouseManager warehouseManager = new WarehouseManager();
+        Integer input = -1;
+        List<Product> result = warehouseManager.searchBySellingPrice(input);
+
+    }
 }
