@@ -62,6 +62,8 @@ class WarehouseManagerTest {
         List<Product> result = warehouseManager.searchBySellingPrice(input);
         assertNotEquals(null, result);
     }
+
+   //test sotto da finire, da sistemare searchBySellingPrice
     @Test
     void checkifSearchBySellingPriceInputIsNegative(){
         WarehouseManager warehouseManager = new WarehouseManager();
