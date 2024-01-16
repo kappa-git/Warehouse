@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -31,6 +32,21 @@ class WarehouseManagerTest {
         List<Product> result = warehouseManager.searchByPurchasePrice(input);
         assertEquals(result, Collections.emptyList());
     }
-    
+    @Test
+    void checkIfSearchBySellingPriceThereIsAnElementOf500Dollars(){
+        WarehouseManager warehouseManager = new WarehouseManager();
+        double price = 500.0;
+        List<Product> result = warehouseManager.searchBySellingPrice(price);
+//        Boolean listIsEmpty = result.isEmpty();
+
+        List<Product> resultPrice = new ArrayList<>();
+        for(Product product : result){
+            if(product.getSellingPrice() == price){
+                resultPrice.add(product);
+            }
+        }
+           assertEquals(result, resultPrice);
+
+    }
 
 }
