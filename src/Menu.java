@@ -123,7 +123,7 @@ public class Menu {
         if (product != null) {
 
             // Verifica se il prodotto può essere aggiunto al carrello
-            if (cart.addToCart(product)) {
+            if (product != null && cart.addToCart(product).contains(product)) {
                 System.out.println("Product added to cart.");
             } else {
                 System.out.println("Product is NOT added to cart. Please check cart capacity.");

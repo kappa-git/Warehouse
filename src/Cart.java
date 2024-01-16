@@ -5,12 +5,11 @@ import java.util.List;
 class Cart {
     private final List<Product> cartItems = new ArrayList<>();
 
-    public Boolean addToCart(Product product) {
+    public List<Product> addToCart(Product product) {
         if (product != null){
-            return  cartItems.add(product);
-        } else{
-            return false;
+            cartItems.add(product);
         }
+        return cartItems;
     }
 
     public boolean removeProductFromCart(Integer productID, Integer quantity) {
