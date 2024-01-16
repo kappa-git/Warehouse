@@ -139,7 +139,7 @@ public class Menu {
 
         warehouseManager.searchById(deviceIdToRemoveToCart);
         int quantity = product.getQuantity();
-        Integer productId = product.getProductId();
+        int productId = product.getProductId();
         if (deviceIdToRemoveToCart == productId) {
             if (product != null && cart.removeProductFromCart(productId, quantity)) {
                 System.out.println("Product is added to cart");
