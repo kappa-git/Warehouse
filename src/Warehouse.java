@@ -1,17 +1,18 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 class Warehouse {
-    private final List<Product> scaffoldItems = new ArrayList<>();
+    private List<Product> scaffoldItems = new ArrayList<>();
 
     public Warehouse() {
         this.scaffoldItems.addAll(getInventory());
     }
 
     public void addQuantityProduct(Product product, int quantityToAdd) {
-        Product productToUodate = scaffoldItems.stream().filter(productToCheck -> productToCheck == product).toList().getFirst();
-        scaffoldItems.remove(productToUodate);
-        productToUodate.setQuantity(productToUodate.getQuantity()+quantityToAdd);
-        scaffoldItems.add(productToUodate);
+        Product productToUpdate = scaffoldItems.stream().filter(productToCheck -> productToCheck == product).collect(Collectors.toList()).getFirst();
+        scaffoldItems.remove(productToUpdate);
+        productToUpdate.setQuantity(productToUpdate.getQuantity()+quantityToAdd);
+        scaffoldItems.add(productToUpdate);
         System.out.println("LOG - Warehouse - Product added to the Warehouse");
     }
 
@@ -19,8 +20,8 @@ class Warehouse {
 
 
 
-    public void removeProduct(int deviceToRemove) {
-        scaffoldItems.removeIf(device -> device.getProductId() == deviceToRemove);
+    public Boolean removeProduct(int deviceToRemove) {
+        return scaffoldItems.removeIf(product -> product.getProductId() == deviceToRemove);
     }
 
     public List<Product> getInventory() {
