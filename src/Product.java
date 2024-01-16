@@ -10,7 +10,9 @@ class Product {
     private double sellingPrice;
     private int productId;
     private int quantity;
+    public Product (){
 
+    }
     public Product (String deviceType, String manufacturer, String model, String description,
                    double displaySize, int storageSize, double purchasePrice,
                    double sellingPrice, int productId) {
@@ -25,6 +27,7 @@ class Product {
         this.productId = productId;
         this.quantity = 0;
     }
+
 
     public int getQuantity() {
         return quantity;

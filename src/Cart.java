@@ -1,9 +1,7 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 class Cart {
-    private int productToRemoveId;
     private final List<Product> cartItems = new ArrayList<>();
 
     public Boolean addToCart(Product product) {
@@ -14,26 +12,21 @@ class Cart {
         }
     }
 
-//    public boolean removeFromCart(Integer productID, Integer quantity) {
-//        if (productID != null){
-//
-//            cartItems.stream().filter(product -> product.getProductId() == productID);
-//            return  true;
-//        } else{
-//            return false;
-//        }
-//    }
-public boolean removeProduct() {
-    return cartItems.removeIf(product -> product.getProductId() == productToRemoveId);
-}
+    public Boolean removeProductFromCart(Integer productId, Integer quantity) {
+        if (productId != null) {
+            return cartItems.removeIf(product -> product.getProductId() == productId && (quantity == null || quantity<= 0 || product.getQuantity()<= quantity));
+
+        } else {
+            return false;
+        }
+    }
 
     public double calculateTotal() {
         return cartItems.stream().mapToDouble(Product::getSellingPrice).sum();
     }
 
-    public boolean clearCart() {
+    public void clearCart() {
         cartItems.clear();
-        return cartItems.isEmpty();
     }
 
     public List<Product> getCartItems() {
