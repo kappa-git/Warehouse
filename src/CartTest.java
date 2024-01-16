@@ -12,6 +12,7 @@ class CartTest {
         List<Product> result = cart.addToCart(product);
         assertTrue(result.contains(product));
 
+
     }
     @Test
     void checkIfProductWasAddedToCart(){
