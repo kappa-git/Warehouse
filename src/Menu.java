@@ -119,7 +119,7 @@ public class Menu {
 
 
         Product product = warehouseManager.searchById(deviceIdToAddToCart);
-        if (product != null && cart.addToCart(product)) {
+        if (product != null && cart.addToCart(product).contains(product)) {
             System.out.println("Product is added to cart");
             start();
         } else {
@@ -139,7 +139,7 @@ public class Menu {
 
         warehouseManager.searchById(deviceIdToRemoveToCart);
         int quantity = product.getQuantity();
-        Integer productId = product.getProductId();
+        int productId = product.getProductId();
         if (deviceIdToRemoveToCart == productId) {
             if (product != null && cart.removeProductFromCart(productId, quantity)) {
                 System.out.println("Product is added to cart");
