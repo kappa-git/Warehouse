@@ -67,6 +67,7 @@ public class Menu {
             case 11 -> MenuChoice.SearchByPurchasePrice;
             case 12 -> MenuChoice.GetItemInCart;
             case 13 -> MenuChoice.GetItemInWarehouse;
+            case 0 -> MenuChoice.Exit;
             default -> MenuChoice.NotValid;
         };
     }
