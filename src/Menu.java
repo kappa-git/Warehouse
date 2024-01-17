@@ -119,7 +119,7 @@ public class Menu {
 
 
         Product product = warehouseManager.searchById(deviceIdToAddToCart);
-        if (product != null && cart.addToCart(product)) {
+        if (product != null && cart.addToCart(product).contains(product)){
             System.out.println("Product is added to cart");
             start();
         } else {
