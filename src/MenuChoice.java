@@ -11,7 +11,8 @@ public enum MenuChoice {
     SearchByManufacturer,
     SearchBySellingPrice,
     SearchByPurchasePrice,
-    GetCartItems,
+    GetItemInCart,
+    GetItemInWarehouse,
     Exit,
     NotValid
 }

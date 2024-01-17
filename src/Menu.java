@@ -32,6 +32,7 @@ public class Menu {
                 10. Search by Selling Price
                 11. Search by Purchase Price
                 12. Print Cart Items
+                13. Print Warehouse Items
                 0. Exit""");
         System.out.print("Enter your choice: ");
         readChoiceInputFromUser();
@@ -64,7 +65,8 @@ public class Menu {
             case 9 -> MenuChoice.SearchByManufacturer;
             case 10 -> MenuChoice.SearchBySellingPrice;
             case 11 -> MenuChoice.SearchByPurchasePrice;
-            case 12 -> MenuChoice.GetCartItems;
+            case 12 -> MenuChoice.GetItemInCart;
+            case 13 -> MenuChoice.GetItemInWarehouse;
             default -> MenuChoice.NotValid;
         };
     }
@@ -82,7 +84,8 @@ public class Menu {
             case SearchByManufacturer -> searchByManufacturer();
             case SearchBySellingPrice -> searchBySellingPrice();
             case SearchByPurchasePrice -> searchByPurchasePrice();
-            case GetCartItems -> getCartItems();
+            case GetItemInCart -> GetItemInCart();
+            case GetItemInWarehouse -> GetItemInWarehouse();
             case Exit -> {
                 System.out.println("Exiting program. Goodbye!");
                 scanner.close();
@@ -98,8 +101,12 @@ public class Menu {
         warehouseManager.printProducts();
         start();
     }
-    private void getCartItems(){
+    private void GetItemInCart(){
         warehouseManager.getItemInCart();
+        start();
+    }
+    private void GetItemInWarehouse(){
+        warehouseManager.getItemInWarehouse();
         start();
     }
 
