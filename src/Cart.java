@@ -11,13 +11,11 @@ class Cart {
             return cartItems;
     }
 
-    public Boolean removeProductFromCart(Integer productId, Integer quantity) {
+    public List <Product> removeProductFromCart(Integer productId, Integer quantity) {
         if (productId != null) {
-            return cartItems.removeIf(product -> product.getProductId() == productId && (quantity == null || quantity<= 0 || product.getQuantity()<= quantity));
+            cartItems.removeIf(product -> product.getProductId() == productId && (quantity == null || quantity<= 0 || product.getQuantity()<= quantity));
 
-        } else {
-            return false;
-        }
+        } return cartItems;
     }
 
     public double calculateTotal() {

@@ -31,6 +31,7 @@ public class Menu {
                 9. Search by Manufacturer
                 10. Search by Selling Price
                 11. Search by Purchase Price
+                12. Print Cart Items
                 0. Exit""");
         System.out.print("Enter your choice: ");
         readChoiceInputFromUser();
@@ -63,6 +64,7 @@ public class Menu {
             case 9 -> MenuChoice.SearchByManufacturer;
             case 10 -> MenuChoice.SearchBySellingPrice;
             case 11 -> MenuChoice.SearchByPurchasePrice;
+            case 12 -> MenuChoice.GetCartItems;
             default -> MenuChoice.NotValid;
         };
     }
@@ -80,6 +82,7 @@ public class Menu {
             case SearchByManufacturer -> searchByManufacturer();
             case SearchBySellingPrice -> searchBySellingPrice();
             case SearchByPurchasePrice -> searchByPurchasePrice();
+            case GetCartItems -> getCartItems();
             case Exit -> {
                 System.out.println("Exiting program. Goodbye!");
                 scanner.close();
@@ -93,6 +96,10 @@ public class Menu {
 
     private void printProducts() {
         warehouseManager.printProducts();
+        start();
+    }
+    private void getCartItems(){
+        warehouseManager.getItemInCart();
         start();
     }
 
@@ -141,7 +148,7 @@ public class Menu {
         int quantity = product.getQuantity();
         Integer productId = product.getProductId();
         if (deviceIdToRemoveToCart == productId) {
-            if (product != null && cart.removeProductFromCart(productId, quantity)) {
+            if (product != null && cart.removeProductFromCart(productId, quantity).contains(product)) {
                 System.out.println("Product is added to cart");
                 start();
             } else {
