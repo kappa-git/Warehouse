@@ -4,21 +4,18 @@ import java.util.List;
 class Cart {
     private final List<Product> cartItems = new ArrayList<>();
 
-    public Boolean addToCart(Product product) {
+    public List <Product> addToCart(Product product) {
         if (product != null){
-            return  cartItems.add(product);
-        } else{
-            return false;
+            cartItems.add(product);
         }
+            return cartItems;
     }
 
-    public Boolean removeProductFromCart(Integer productId, Integer quantity) {
+    public List <Product> removeProductFromCart(Integer productId, Integer quantity) {
         if (productId != null) {
-            return cartItems.removeIf(product -> product.getProductId() == productId && (quantity == null || quantity<= 0 || product.getQuantity()<= quantity));
+            cartItems.removeIf(product -> product.getProductId() == productId && (quantity == null || quantity<= 0 || product.getQuantity()<= quantity));
 
-        } else {
-            return false;
-        }
+        } return cartItems;
     }
 
     public double calculateTotal() {

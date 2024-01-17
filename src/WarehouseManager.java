@@ -16,22 +16,30 @@ class WarehouseManager {
     }
 
     public void printProducts() {
-        warehouse.getInventory().forEach(device ->
-                System.out.println("ID: " + device.getProductId() + ", Type: " + device.getDeviceType()
-                        + ", Manufacturer: " + device.getManufacturer() + ", Model: " + device.getModel()
-                        + ", Selling Price: " + device.getSellingPrice() + ", Display Size: " + device.getDisplaySize() + ",\n"
-                        + "          Storage Size: " + device.getStorageSize() + ", Purchase Price: " + device.getPurchasePrice()
-                        + ", Description: " + device.getDescription() + ", Quantity: " + device.getQuantity()));
+        warehouse.getInventory().forEach(product ->
+                System.out.println("ID: " + product.getProductId() + ", Type: " + product.getDeviceType()
+                        + ", Manufacturer: " + product.getManufacturer() + ", Model: " + product.getModel()
+                        + ", Selling Price: " + product.getSellingPrice() + ", Display Size: " + product.getDisplaySize() + ",\n"
+                        + "          Storage Size: " + product.getStorageSize() + ", Purchase Price: " + product.getPurchasePrice()
+                        + ", Description: " + product.getDescription() + ", Quantity: " + product.getQuantity()));
     }
     public void getItemInCart() {
-        cart.getCartItems().forEach(device ->
-                System.out.println("ID: " + device.getProductId() + ", Type: " + device.getDeviceType()
-                        + ", Manufacturer: " + device.getManufacturer() + ", Model: " + device.getModel()
-                        + ", Selling Price: " + device.getSellingPrice() + ", Display Size: " + device.getDisplaySize() + ",\n"
-                        + "          Storage Size: " + device.getStorageSize() + ", Purchase Price: " + device.getPurchasePrice()
-                        + ", Description: " + device.getDescription() + ", Quantity: " + device.getQuantity()));
+        cart.getCartItems().forEach(product ->
+                System.out.println("ID: " + product.getProductId() + ", Type: " + product.getDeviceType()
+                        + ", Manufacturer: " + product.getManufacturer() + ", Model: " + product.getModel()
+                        + ", Selling Price: " + product.getSellingPrice() + ", Display Size: " + product.getDisplaySize() + ",\n"
+                        + "          Storage Size: " + product.getStorageSize() + ", Purchase Price: " + product.getPurchasePrice()
+                        + ", Description: " + product.getDescription() + ", Quantity: " + product.getQuantity()));
     }
 
+    public void getItemInWarehouse() {
+        warehouse.getItems().forEach(product ->
+                System.out.println("ID: " + product.getProductId() + ", Type: " + product.getDeviceType()
+                        + ", Manufacturer: " + product.getManufacturer() + ", Model: " + product.getModel()
+                        + ", Selling Price: " + product.getSellingPrice() + ", Display Size: " + product.getDisplaySize() + ",\n"
+                        + "          Storage Size: " + product.getStorageSize() + ", Purchase Price: " + product.getPurchasePrice()
+                        + ", Description: " + product.getDescription() + ", Quantity: " + product.getQuantity()));
+    }
 
 
     public void removeFromWarehouse(int productId) {
