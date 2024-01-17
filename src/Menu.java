@@ -3,11 +3,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
-    private WarehouseManager warehouseManager;
-    private CartManager cartManager;
-    private Scanner scanner = new Scanner(System.in);
-    private Cart cart;
-    private Product product;
+    private final WarehouseManager warehouseManager;
+    private final CartManager cartManager;
+    private final Scanner scanner = new Scanner(System.in);
+    private final Cart cart;
+    private final Product product;
 
 
     public Menu(WarehouseManager warehouseManager, CartManager cartManager, Cart cart, Product product) {
@@ -37,7 +37,7 @@ public class Menu {
     }
 
     private void readChoiceInputFromUser() {
-        Integer choice;
+        int choice;
 
         try {
             choice = scanner.nextInt();
@@ -139,7 +139,7 @@ public class Menu {
 
         warehouseManager.searchById(deviceIdToRemoveToCart);
         int quantity = product.getQuantity();
-        Integer productId = product.getProductId();
+        int productId = product.getProductId();
         if (deviceIdToRemoveToCart == productId) {
             if (product != null && cart.removeProductFromCart(productId, quantity)) {
                 System.out.println("Product is added to cart");
@@ -160,17 +160,6 @@ public class Menu {
         cart.clearCart();
         System.out.println("Sale finalized. Your total payed is " + total);
     }
-//        private void removeFromCart(){
-//            System.out.println("Enter device ID to remove from cart: ");
-//            int deviceIdToRemoveFromCart = checkIfIntEntered();
-//            Product product = warehouseManager.searchById(deviceIdToRemoveFromCart);
-//            if (product != null && cartManager.removeFromCart(product)) {
-//                System.out.println("Product is removed from cart");
-//            } else {
-//                System.out.println("Product is NOT removed from cart, please retry");
-//                start();
-//            }
-//        }
 
     private void searchByPurchasePrice() {
         System.out.println("Enter purchase price to search: ");

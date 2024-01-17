@@ -2,7 +2,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 class Warehouse {
-    private List<Product> scaffoldItems = new ArrayList<>();
+    private final List<Product> scaffoldItems = new ArrayList<>();
 
     public Warehouse() {
         this.scaffoldItems.addAll(getInventory());
@@ -15,10 +15,6 @@ class Warehouse {
         scaffoldItems.add(productToUpdate);
         System.out.println("LOG - Warehouse - Product added to the Warehouse");
     }
-
-
-
-
 
     public Boolean removeProduct(int deviceToRemove) {
         return scaffoldItems.removeIf(product -> product.getProductId() == deviceToRemove);
