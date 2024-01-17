@@ -3,11 +3,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
-    private WarehouseManager warehouseManager;
-    private CartManager cartManager;
-    private Scanner scanner = new Scanner(System.in);
-    private Cart cart;
-    private Product product;
+    private final WarehouseManager warehouseManager;
+    private final CartManager cartManager;
+    private final Scanner scanner = new Scanner(System.in);
+    private final Cart cart;
+    private final Product product;
 
 
     public Menu(WarehouseManager warehouseManager, CartManager cartManager, Cart cart, Product product) {
@@ -123,7 +123,10 @@ public class Menu {
     private void removeFromWareHouse() {
         System.out.println("Enter product ID to remove: ");
         int deviceIdToRemove = scanner.nextInt();
-        warehouseManager.removeFromWarehouse(deviceIdToRemove);
+        System.out.println("Enter quantity: ");
+        int quantityToRemove = scanner.nextInt();
+        warehouseManager.removeFromWarehouse(deviceIdToRemove, quantityToRemove);
+        start();
     }
     private void addToCart() {
         System.out.println("Enter product ID: ");
@@ -155,24 +158,28 @@ public class Menu {
         return cart.calculateTotal();
     }
     private void removeFromCart() {
-        System.out.println("Enter device ID to add to cart: ");
-        int deviceIdToRemoveToCart;
-
-        deviceIdToRemoveToCart = checkIfIntEntered();
+        System.out.println("Enter device ID to remove from cart: ");
+        int deviceIdToRemoveToCart = checkIfIntEntered();
 
         warehouseManager.searchById(deviceIdToRemoveToCart);
-        int quantity = product.getQuantity();
-        Integer productId = product.getProductId();
-        if (deviceIdToRemoveToCart == productId) {
-            if (product != null && cart.removeProductFromCart(productId, quantity).contains(product)) {
-                System.out.println("Product is added to cart");
-                start();
+
+        if (product != null) {
+            int quantity = product.getQuantity();
+            Integer productId = product.getProductId();
+
+            if (deviceIdToRemoveToCart == productId) {
+                cart.removeProductFromCart(productId, quantity);
+                System.out.println("Product is removed from cart");
             } else {
-                System.out.println("Product is NOT added to cart, please retry");
-                start();
+                System.out.println("Product is NOT removed from cart, please retry");
             }
+        } else {
+            System.out.println("Product not found in the warehouse");
         }
+
+        start();
     }
+
 
     private Double calculateMidTotal(){
         return warehouseManager.calculateMidPrice();

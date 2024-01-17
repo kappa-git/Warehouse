@@ -1,9 +1,7 @@
-import java.awt.Menu;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 class WarehouseManager {
     private Warehouse warehouse;
@@ -42,14 +40,9 @@ class WarehouseManager {
     }
 
 
-    public void removeFromWarehouse(int productId) {
-        warehouse.removeProduct(productId);
+    public void removeFromWarehouse(int productId, int quantity) {
+        warehouse.removeProduct(productId, quantity);
     }
-    public void removeFromCart(int productId, int quantity) {
-        cart.removeProductFromCart(productId, quantity);
-    }
-
-
 
 
     public double calculateMidPrice() {
@@ -65,15 +58,18 @@ class WarehouseManager {
         System.out.println("Sale finalized. Cart cleared.");
     }
 
-    public Product searchById (Integer id){
-        Product result = warehouse.getItems().stream().filter(product -> Objects.equals(product.getProductId(), id)).collect(Collectors.toList()).getFirst();
+    public Integer searchById(Integer id) {
+        Optional<Product> result = warehouse.getItems().stream()
+                .filter(product -> Objects.equals(product.getProductId(), id))
+                .findFirst();
 
-        System.out.println("LOG - WAREHOUSEMANAGER - products filtered by ID. Products: " + result);
-        return result;
+        result.ifPresent(product -> System.out.println("LOG - WAREHOUSEMANAGER - Product found: " + product));
+        return result.map(Product::getProductId).orElse(null);
     }
 
-    public Boolean addToWarehouse(int deviceIdToAdd, int quantityToAdd) {
-        Product product = warehouse.getItems().stream().filter(productToFind -> productToFind.getProductId() == deviceIdToAdd).collect(Collectors.toList()).getFirst();
+
+    public boolean addToWarehouse(int deviceIdToAdd, int quantityToAdd) {
+        Integer product = searchById(deviceIdToAdd);
 
         if (product != null) {
             warehouse.addQuantityProduct(product, quantityToAdd);

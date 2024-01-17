@@ -1,5 +1,6 @@
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 class Warehouse {
     private List<Product> scaffoldItems = new ArrayList<>();
@@ -8,21 +9,31 @@ class Warehouse {
         this.scaffoldItems.addAll(getInventory());
     }
 
-    public void addQuantityProduct(Product product, int quantityToAdd) {
-        Product productToUpdate = scaffoldItems.stream().filter(productToCheck -> productToCheck == product).collect(Collectors.toList()).getFirst();
-        scaffoldItems.remove(productToUpdate);
+    public void addQuantityProduct(Integer product, int quantityToAdd) {
+        Product productToUpdate = scaffoldItems.stream()
+                .filter(productToCheck -> productToCheck.getProductId() == product)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+
         productToUpdate.setQuantity(productToUpdate.getQuantity()+quantityToAdd);
-        scaffoldItems.add(productToUpdate);
         System.out.println("LOG - Warehouse - Product added to the Warehouse");
     }
 
+    public void removeProduct(Integer productId, int quantityToRemove) {
+        Product productToUpdate = scaffoldItems.stream()
+                .filter(productToCheck -> productToCheck.getProductId() == productId)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
 
+        int currentQuantity = productToUpdate.getQuantity();
+        if (currentQuantity < quantityToRemove) {
+            throw new IllegalArgumentException("Insufficient quantity in the warehouse");
+        }
 
-
-
-    public Boolean removeProduct(int deviceToRemove) {
-        return scaffoldItems.removeIf(product -> product.getProductId() == deviceToRemove);
+        productToUpdate.setQuantity(currentQuantity - quantityToRemove);
+        System.out.println("LOG - WAREHOUSE - Product removed from the Warehouse");
     }
+
 
     public List<Product> getInventory() {
         Notebook laptop = new Notebook("Notebook", "Asus", "ZenBook", "Non disponibile", 14, 1024, 850.00, 1000.00, 4431);
@@ -38,6 +49,15 @@ class Warehouse {
 
     public List<Product> getItems() {
         return scaffoldItems;
+    }
+
+    public int getProductQuantity(int productId) {
+        Product productToUpdate = scaffoldItems.stream()
+                .filter(productToCheck -> productToCheck.getProductId() == productId)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+
+        return productToUpdate.getQuantity();
     }
 
 }
