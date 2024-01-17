@@ -40,6 +40,7 @@ class WarehouseManager {
     }
 
 
+
     public void removeFromWarehouse(int productId) {
         warehouse.removeProduct(productId);
     }

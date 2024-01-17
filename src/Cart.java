@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 class Cart {
-    private List<Product> cartItems = new ArrayList<>();
+    public List<Product> cartItems = new ArrayList<>();
     public Cart(){
         this.cartItems.addAll(getInventoryCart());
     }
