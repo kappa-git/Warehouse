@@ -141,7 +141,7 @@ public class Menu {
         int quantity = product.getQuantity();
         int productId = product.getProductId();
         if (deviceIdToRemoveToCart == productId) {
-            if (product != null && cart.removeProductFromCart(productId, quantity)) {
+            if (product != null && cart.removeProductFromCart(productId, quantity).contains(product)) {
                 System.out.println("Product is added to cart");
                 start();
             } else {
