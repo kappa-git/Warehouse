@@ -195,7 +195,7 @@ public class Menu {
         List<Product> result = warehouseManager.searchByManufacturer(manufacturerToSearch);
         if (!result.isEmpty()) {
             for (Product product : result) {
-                System.out.println(product.getDeviceType());
+                System.out.println(product.getManufacturer());
             }
         }
 
