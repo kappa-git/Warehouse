@@ -4,26 +4,46 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 class Cart {
-    public List<Product> cartItems = new ArrayList<>();
+    private List<Product> cartItems = new ArrayList<>();
+
+
     public Cart(){
         this.cartItems.addAll(getInventoryCart());
     }
+
     public List<Product> getInventoryCart(){
-        return new ArrayList<>(Arrays.asList());
+        return new ArrayList<>(List.of());
     }
+
     public void addQuantityProductCart(Product product, int quantityToAdd) {
-        Product productToUpdate = cartItems.stream().filter(productToCheck -> productToCheck == product).collect(Collectors.toList()).getFirst();
-        cartItems.remove(productToUpdate);
-        productToUpdate.setQuantity(productToUpdate.getQuantity()+quantityToAdd);
-        cartItems.add(productToUpdate);
-        System.out.println("LOG - Cart - Product added to the Cart");
+
+        List<Product> resultList = cartItems.stream().filter(productToCheck -> productToCheck.getProductId() == product.getProductId()).toList();
+
+        if (!resultList.isEmpty()) {
+            Product productToUpdate = resultList.getFirst();
+
+            if (product.toString().equals(productToUpdate.toString()))
+                cartItems.remove(productToUpdate);
+        }
+
+        Product productToAdd;
+        try {
+            productToAdd = (Product) product.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (productToAdd != null)
+        {
+            productToAdd.setQuantity(quantityToAdd);
+            cartItems.add(productToAdd);
+            System.out.println("LOG - Cart - Product added to the Cart");
+        }
+        else
+        {
+            System.out.println("Not insert into cart - error");
+        }
     }
-//    public List <Product> addToCart(Product product) {
-//        if (product != null){
-//            cartItems.add(product);
-//        }
-//            return cartItems;
-//    }
 
     public List <Product> removeProductFromCart(Integer productId, Integer quantity) {
         if (productId != null) {
@@ -32,8 +52,16 @@ class Cart {
         } return cartItems;
     }
 
+    public double calcTotalProduct(Product product) {
+        return product.getSellingPrice() * product.getQuantity();
+    }
+
     public double calculateTotal() {
-        return cartItems.stream().mapToDouble(Product::getSellingPrice).sum();
+        double totalCart = 0;
+        for (Product product : cartItems) {
+            totalCart += calcTotalProduct(product);
+        }
+        return totalCart;
     }
 
     public void clearCart() {
@@ -50,6 +78,4 @@ class Cart {
                 .average()
                 .orElse(0.0);
     }
-
-
 }

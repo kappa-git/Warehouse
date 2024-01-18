@@ -3,53 +3,83 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-class WarehouseManager {
+public class Manager {
     private Warehouse warehouse;
     private Cart cart;
 
-
-    public WarehouseManager() {
+    public Manager() {
         this.warehouse = new Warehouse();
         this.cart = new Cart();
     }
 
     public void printProducts() {
-        warehouse.getInventory().forEach(product ->
-                System.out.println("ID: " + product.getProductId() + ", Type: " + product.getDeviceType()
-                        + ", Manufacturer: " + product.getManufacturer() + ", Model: " + product.getModel()
-                        + ", Selling Price: " + product.getSellingPrice() + ", Display Size: " + product.getDisplaySize() + ",\n"
-                        + "          Storage Size: " + product.getStorageSize() + ", Purchase Price: " + product.getPurchasePrice()
-                        + ", Description: " + product.getDescription() + ", Quantity: " + product.getQuantity()));
-    }
-    public void getItemInCart() {
-        cart.getCartItems().forEach(product ->
-                System.out.println("ID: " + product.getProductId() + ", Type: " + product.getDeviceType()
-                        + ", Manufacturer: " + product.getManufacturer() + ", Model: " + product.getModel()
-                        + ", Selling Price: " + product.getSellingPrice() + ", Display Size: " + product.getDisplaySize() + ",\n"
-                        + "          Storage Size: " + product.getStorageSize() + ", Purchase Price: " + product.getPurchasePrice()
-                        + ", Description: " + product.getDescription() + ", Quantity: " + product.getQuantity()));
+        warehouse.getInventory().forEach(product -> System.out.println(product));
     }
 
-    public void getItemInWarehouse() {
-        warehouse.getItems().forEach(product ->
-                System.out.println("ID: " + product.getProductId() + ", Type: " + product.getDeviceType()
-                        + ", Manufacturer: " + product.getManufacturer() + ", Model: " + product.getModel()
-                        + ", Selling Price: " + product.getSellingPrice() + ", Display Size: " + product.getDisplaySize() + ",\n"
-                        + "          Storage Size: " + product.getStorageSize() + ", Purchase Price: " + product.getPurchasePrice()
-                        + ", Description: " + product.getDescription() + ", Quantity: " + product.getQuantity()));
+    public void printItemInCart() {
+        cart.getCartItems().forEach(product -> System.out.println(product));
     }
 
-
-
-    public void removeFromWarehouse(int productId) {
-        warehouse.removeProduct(productId);
+    public void printItemInWarehouse() {
+        warehouse.getItems().forEach(product -> System.out.println(product));
     }
+
+    public Boolean addToWarehouse(int deviceIdToAdd, int quantityToAdd) {
+        boolean exist;
+
+        List<Product> list = warehouse.getItems().stream().filter(productToFind -> productToFind.getProductId()== deviceIdToAdd).toList();
+        Product product = null;
+
+        exist = !list.isEmpty();
+        if (exist)
+            product = list.getFirst();
+
+        if (product != null) {
+            warehouse.addQuantityProduct(product, quantityToAdd);
+            System.out.println("LOG - WAREHOUSEMANAGER - Product added.");
+            return true;
+        } else {
+            if (!exist)
+                System.out.println("No match found for given id product");
+            else
+                System.out.println("LOG - WAREHOUSEMANAGER - Product not added.");
+            return false;
+        }
+    }
+
+    public Boolean addToCart(int deviceIdToAdd, int quantityToAdd) {
+
+        List<Product> list = warehouse.getItems().stream().filter(productToFind -> productToFind.getProductId()== deviceIdToAdd).toList();
+        Product product = null;
+
+        if (!list.isEmpty())
+            product = list.getFirst();
+
+        if (product != null && (product.getQuantity() > 0 && quantityToAdd <= product.getQuantity())) {
+            cart.addQuantityProductCart(product,quantityToAdd);
+            removeFromWarehouse(deviceIdToAdd,quantityToAdd);
+            System.out.println("LOG - CARTMANAGER - Product Added");
+            return true;
+        } else {
+            System.out.println("LOG - CARTMANAGER - Product Not Added");
+            return false;
+        }
+    }
+
+    public void removeFromWarehouse(int productId, int quantity) {
+        warehouse.removeProduct(productId, quantity);
+    }
+
     public void removeFromCart(int productId, int quantity) {
-        cart.removeProductFromCart(productId, quantity);
+        Product product = searchById(productId);
+        if (product != null) {
+            cart.removeProductFromCart(productId, product.getQuantity());
+            addToWarehouse(productId, product.getQuantity());
+            System.out.println("Product removed from cart.");
+        } else {
+            System.out.println("Product not found in the cart.");
+        }
     }
-
-
-
 
     public double calculateMidPrice() {
         return cart.calculateMidPrice();
@@ -65,24 +95,13 @@ class WarehouseManager {
     }
 
     public Product searchById (Integer id){
-        Product result = warehouse.getItems().stream().filter(product -> Objects.equals(product.getProductId(), id)).toList().getFirst();
+        Product result = warehouse.getItems().stream().filter(product -> Objects.equals(product.getProductId(), id)).collect(Collectors.toList()).getFirst();
 
-        System.out.println("LOG - WAREHOUSEMANAGER - products filtered by ID. Products: " + result);
+        System.out.println("LOG - MANAGER - products filtered by ID. Products: " + result);
         return result;
     }
 
-    public void addToWarehouse(int deviceIdToAdd, int quantityToAdd) {
-        Product product = warehouse.getItems().stream().filter(productToFind -> productToFind.getProductId() == deviceIdToAdd).toList().getFirst();
-
-        if (product != null) {
-            warehouse.addQuantityProduct(product, quantityToAdd);
-            System.out.println("LOG - WAREHOUSEMANAGER - Product added.");
-        } else {
-            System.out.println("LOG - WAREHOUSEMANAGER - Product not added.");
-        }
-    }
-
-    public  List<Product> searchByDevice(String type){
+    public List<Product> searchByDevice(String type){
         List<Product> results = new ArrayList<>();
 
         for (Product product : warehouse.getInventory()) {
@@ -95,6 +114,7 @@ class WarehouseManager {
         }
         return results;
     }
+
     public List<Product> searchByManufacturer(String manufacturer) {
         List<Product> searchResults = new ArrayList<>();
 
@@ -110,6 +130,7 @@ class WarehouseManager {
 
         return searchResults;
     }
+
     public List<Product> searchBySellingPrice(double sellingPrice) {
         List<Product> searchPrice = new ArrayList<>();
 
@@ -139,6 +160,7 @@ class WarehouseManager {
         }
         return searchPurchasePrice;
     }
+
     public List<Product> searchByRangeOfPrice (double purchaseminPrice, double purchasemaxPrice){
         List<Product> searchByRangeOfPrice = new ArrayList<>();
 

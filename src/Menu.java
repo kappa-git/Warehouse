@@ -3,16 +3,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
-    private WarehouseManager warehouseManager;
-    private CartManager cartManager;
+
+    private Manager manager;
     private Scanner scanner = new Scanner(System.in);
     private Cart cart;
     private Product product;
 
-
-    public Menu(WarehouseManager warehouseManager, CartManager cartManager, Cart cart, Product product) {
-        this.cartManager = cartManager;
-        this.warehouseManager = warehouseManager;
+    public Menu(Manager manager, Cart cart, Product product) {
+        this.manager = manager;
         this.cart = cart;
         this.product = product;
     }
@@ -20,20 +18,20 @@ public class Menu {
     public void start() {
         System.out.println("""
 
-                1. Print Products
-                2. Add to Warehouse
-                3. Remove from Warehouse
-                4. Add to Cart
-                5. Remove from Cart
-                6. Calculate Cart Total
-                7. Calculate Mid Total
-                8. Finalize Sale
-                9. Search by Manufacturer
+                1.  Print Products
+                2.  Add to Warehouse
+                3.  Remove from Warehouse
+                4.  Add to Cart
+                5.  Remove from Cart
+                6.  Calculate Cart Total
+                7.  Calculate Mid Total
+                8.  Finalize Sale
+                9.  Search by Manufacturer
                 10. Search by Selling Price
                 11. Search by Purchase Price
                 12. Print Cart Items
                 13. Print Warehouse Items
-                0. Exit""");
+                0.  Exit""");
         System.out.print("Enter your choice: ");
         readChoiceInputFromUser();
     }
@@ -99,15 +97,15 @@ public class Menu {
     }
 
     private void printProducts() {
-        warehouseManager.printProducts();
+        manager.printProducts();
         start();
     }
     private void GetItemInCart(){
-        warehouseManager.getItemInCart();
+        manager.printItemInCart();
         start();
     }
     private void GetItemInWarehouse(){
-        warehouseManager.getItemInWarehouse();
+        manager.printItemInWarehouse();
         start();
     }
 
@@ -116,43 +114,30 @@ public class Menu {
         int deviceIdToAdd = scanner.nextInt();
         System.out.println("Enter quantity: ");
         int quantityToAdd = scanner.nextInt();
-        warehouseManager.addToWarehouse(deviceIdToAdd, quantityToAdd);
+        manager.addToWarehouse(deviceIdToAdd, quantityToAdd);
         start();
     }
 
     private void removeFromWareHouse() {
         System.out.println("Enter product ID to remove: ");
         int deviceIdToRemove = scanner.nextInt();
-        warehouseManager.removeFromWarehouse(deviceIdToRemove);
+        System.out.println("Enter quantity: ");
+        int quantityToRemove = scanner.nextInt();
+        manager.removeFromWarehouse(deviceIdToRemove, quantityToRemove);
+        start();
     }
     private void addToCart() {
         System.out.println("Enter product ID: ");
         int deviceIdToAdd = scanner.nextInt();
         System.out.println("Enter quantity: ");
         int quantityToAdd = scanner.nextInt();
-        cartManager.addToCart(deviceIdToAdd, quantityToAdd);
+        manager.addToCart(deviceIdToAdd, quantityToAdd);
         start();
     }
-
-//    private void addToCart() {
-//        System.out.println("Enter device ID to add to cart: ");
-//        int deviceIdToAddToCart;
-//
-//        deviceIdToAddToCart = checkIfIntEntered();
-//
-//
-//        Product product = warehouseManager.searchById(deviceIdToAddToCart);
-//        if (product != null && cart.addQuantityProductCart(product,).contains(product)){
-//            System.out.println("Product is added to cart");
-//            start();
-//        } else {
-//            System.out.println("Product is NOT added to cart, please retry");
-//            start();
-//        }
-//    }
-
-    private Double calculateCartTotal(){
-        return cart.calculateTotal();
+    private void calculateCartTotal(){
+        double total1 = manager.calculateCartTotal();
+        System.out.println("Il totale del carrello è: " + total1);
+        start();
     }
     private void removeFromCart() {
         System.out.println("Enter device ID to add to cart: ");
@@ -160,7 +145,7 @@ public class Menu {
 
         deviceIdToRemoveToCart = checkIfIntEntered();
 
-        warehouseManager.searchById(deviceIdToRemoveToCart);
+        manager.searchById(deviceIdToRemoveToCart);
         int quantity = product.getQuantity();
         Integer productId = product.getProductId();
         if (deviceIdToRemoveToCart == productId) {
@@ -175,37 +160,25 @@ public class Menu {
     }
 
     private Double calculateMidTotal(){
-        return warehouseManager.calculateMidPrice();
+        return manager.calculateMidPrice();
     }
 
     private void finalizeSale(){
-        double total= calculateCartTotal();
+        double total2 = manager.calculateCartTotal();
         cart.clearCart();
-        System.out.println("Sale finalized. Your total payed is " + total);
+        System.out.println("Sale finalized. Your total payed is " + total2);
     }
-//        private void removeFromCart(){
-//            System.out.println("Enter device ID to remove from cart: ");
-//            int deviceIdToRemoveFromCart = checkIfIntEntered();
-//            Product product = warehouseManager.searchById(deviceIdToRemoveFromCart);
-//            if (product != null && cartManager.removeFromCart(product)) {
-//                System.out.println("Product is removed from cart");
-//            } else {
-//                System.out.println("Product is NOT removed from cart, please retry");
-//                start();
-//            }
-//        }
 
     private void searchByPurchasePrice() {
         System.out.println("Enter purchase price to search: ");
         double purchasePriceToSearch = checkIfDoubleIsEntered();
 
-        List<Product> result = warehouseManager.searchBySellingPrice(purchasePriceToSearch);
+        List<Product> result = manager.searchBySellingPrice(purchasePriceToSearch);
         if (!result.isEmpty()) {
             for (Product product : result) {
                 System.out.println(product);
             }
         }
-
     }
 
 
@@ -215,20 +188,23 @@ public class Menu {
         String manufacturerToSearch = checkIfStringIsEntered();
 
 
-        List<Product> result = warehouseManager.searchByManufacturer(manufacturerToSearch);
+        List<Product> result = manager.searchByManufacturer(manufacturerToSearch);
         if (!result.isEmpty()) {
             for (Product product : result) {
                 System.out.println(product);
+                start();
             }
+        } else{
+            System.out.println("The manufacturer not exist");
+            start();
         }
-
     }
 
     private void searchBySellingPrice() {
         System.out.println("Enter selling price to search: ");
         int sellingPriceToSearch = checkIfIntEntered();
 
-        List<Product> result = warehouseManager.searchBySellingPrice(sellingPriceToSearch);
+        List<Product> result = manager.searchBySellingPrice(sellingPriceToSearch);
         if (!result.isEmpty()) {
             for (Product product : result) {
                 System.out.println(product.getSellingPrice());
@@ -262,6 +238,4 @@ public class Menu {
             return scanner.next();
         }
     }
-
-
-    }
+}

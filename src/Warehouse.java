@@ -1,23 +1,30 @@
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 class Warehouse {
-    private final List<Product> scaffoldItems = new ArrayList<>();
-
+    private List<Product> scaffoldItems = new ArrayList<>();
     public Warehouse() {
-        this.scaffoldItems.addAll(getInventory());
+        scaffoldItems.addAll(getInventory());
     }
 
     public void addQuantityProduct(Product product, int quantityToAdd) {
         Product productToUpdate = scaffoldItems.stream().filter(productToCheck -> productToCheck == product).collect(Collectors.toList()).getFirst();
-        scaffoldItems.remove(productToUpdate);
         productToUpdate.setQuantity(productToUpdate.getQuantity()+quantityToAdd);
-        scaffoldItems.add(productToUpdate);
         System.out.println("LOG - Warehouse - Product added to the Warehouse");
     }
 
-    public Boolean removeProduct(int deviceToRemove) {
-        return scaffoldItems.removeIf(product -> product.getProductId() == deviceToRemove);
+    public Boolean removeProduct(int deviceToRemove, int quantityToRemove) {
+        List<Product> list = scaffoldItems.stream().filter(productToFind -> productToFind.getProductId()== deviceToRemove).toList();
+        Product product = null;
+
+        if (!list.isEmpty()) {
+            product = list.getFirst();
+            product.setQuantity(product.getQuantity()-quantityToRemove);
+            return true;
+        }
+        else
+            return false;
     }
 
     public List<Product> getInventory() {
@@ -33,7 +40,7 @@ class Warehouse {
     }
 
     public List<Product> getItems() {
-        return scaffoldItems;
+        return new ArrayList<>(scaffoldItems);
     }
 
 }
