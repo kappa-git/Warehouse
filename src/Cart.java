@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 class Cart {
+    Cart cart;
+    WarehouseManager warehouseManager;
+    Warehouse warehouse;
+
     private List<Product> cartItems = new ArrayList<>();
     public Cart(){
         this.cartItems.addAll(getInventoryCart());
@@ -18,6 +22,34 @@ class Cart {
         cartItems.add(productToUpdate);
         System.out.println("LOG - Cart - Product added to the Cart");
     }
+
+    public Boolean addToCart(int deviceIdToAdd, int quantityToAdd) {
+
+        Product product = warehouse.getItems().stream().filter(productToFind -> productToFind.getProductId() == deviceIdToAdd).toList().getFirst();
+        if (product != null && product.getQuantity() > 0) {
+            warehouseManager.removeFromWarehouse(deviceIdToAdd);
+            cart.addQuantityProductCart(product, quantityToAdd);
+            System.out.println("LOG - CARTMANAGER - Product Added");
+            return true;
+        } else {
+            System.out.println("LOG - CARTMANAGER - Product Not Added");
+            return false;
+        }
+    }
+
+//    public List <Product> addToCart2 (int productIdToAdd, int quantitytoAdd){
+//        List <Product>product = warehouse.getItems();
+//        if (product != null){
+//            cart.addQuantityProductCart(product, quantitytoAdd);
+//            warehouseManager.removeFromWarehouse(productIdToAdd);
+//
+//        }
+//    }
+
+
+
+
+
 //    public List <Product> addToCart(Product product) {
 //        if (product != null){
 //            cartItems.add(product);

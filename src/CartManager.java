@@ -4,24 +4,25 @@ public class CartManager {
     Warehouse warehouse;
     WarehouseManager warehouseManager;
     Cart cart;
-    public CartManager(){
-        this.cart=new Cart();
-        this.warehouse= new Warehouse();
-        this.warehouseManager=new WarehouseManager();
-    }
-    public Boolean addToCart(int deviceIdToAdd, int quantityToAdd) {
 
-        Product product = cart.getCartItems().stream().filter(productToFind -> productToFind.getProductId()== deviceIdToAdd).toList().getFirst();
-        if (product != null && product.getQuantity() > 0) {
-            cart.addQuantityProductCart(product,quantityToAdd);
-            warehouseManager.removeFromWarehouse(deviceIdToAdd);
-            System.out.println("LOG - CARTMANAGER - Product Added");
-            return true;
-        } else {
-            System.out.println("LOG - CARTMANAGER - Product Not Added");
-            return false;
-        }
+    public CartManager() {
+        this.cart = new Cart();
+        this.warehouse = new Warehouse();
+        this.warehouseManager = new WarehouseManager();
     }
+//    public Boolean addToCart(int deviceIdToAdd, int quantityToAdd) {
+//
+//        Product product = cart.getCartItems().stream().filter(productToFind -> productToFind.getProductId()== deviceIdToAdd).toList().getFirst();
+//        if (product != null && product.getQuantity() > 0) {
+//            cart.addQuantityProductCart(product,quantityToAdd);
+//            warehouseManager.removeFromWarehouse(deviceIdToAdd);
+//            System.out.println("LOG - CARTMANAGER - Product Added");
+//            return true;
+//        } else {
+//            System.out.println("LOG - CARTMANAGER - Product Not Added");
+//            return false;
+//        }
+//}
 
 //    private void addToCart() {
 //        System.out.println("Enter device ID to add to cart: ");

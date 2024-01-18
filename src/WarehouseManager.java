@@ -66,14 +66,14 @@ class WarehouseManager {
     }
 
     public Product searchById (Integer id){
-        Product result = warehouse.getItems().stream().filter(product -> Objects.equals(product.getProductId(), id)).collect(Collectors.toList()).getFirst();
+        Product result = warehouse.getItems().stream().filter(product -> Objects.equals(product.getProductId(), id)).collect(Collectors.toList()).get(0);
 
         System.out.println("LOG - WAREHOUSEMANAGER - products filtered by ID. Products: " + result);
         return result;
     }
 
     public Boolean addToWarehouse(int deviceIdToAdd, int quantityToAdd) {
-        Product product = warehouse.getItems().stream().filter(productToFind -> productToFind.getProductId() == deviceIdToAdd).collect(Collectors.toList()).getFirst();
+        Product product = warehouse.getItems().stream().filter(productToFind -> productToFind.getProductId() == deviceIdToAdd).toList().get(0);
 
         if (product != null) {
             warehouse.addQuantityProduct(product, quantityToAdd);

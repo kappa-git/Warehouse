@@ -130,7 +130,7 @@ public class Menu {
         int deviceIdToAdd = scanner.nextInt();
         System.out.println("Enter quantity: ");
         int quantityToAdd = scanner.nextInt();
-        cartManager.addToCart(deviceIdToAdd, quantityToAdd);
+        cart.addToCart(deviceIdToAdd, quantityToAdd);
         start();
     }
 
