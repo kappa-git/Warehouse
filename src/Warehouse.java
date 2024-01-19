@@ -9,30 +9,42 @@ class Warehouse {
         this.scaffoldItems.addAll(getInventory());
     }
 
-    public void addQuantityProduct(Integer product, int quantityToAdd) {
+    public void addQuantityProduct(Product product, int quantityToAdd) {
         Product productToUpdate = scaffoldItems.stream()
-                .filter(productToCheck -> productToCheck.getProductId() == product)
+                .filter(productToCheck -> productToCheck.getProductId() == product.getProductId())
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Product not found"));
 
-        productToUpdate.setQuantity(productToUpdate.getQuantity()+quantityToAdd);
+        productToUpdate.setQuantity(productToUpdate.getQuantity() + quantityToAdd);
         System.out.println("LOG - Warehouse - Product added to the Warehouse");
     }
 
-    public void removeProduct(Integer productId, int quantityToRemove) {
-        Product productToUpdate = scaffoldItems.stream()
-                .filter(productToCheck -> productToCheck.getProductId() == productId)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+    public Boolean removeProduct(int deviceToRemove, int quantityToRemove) {
+        List<Product> list = scaffoldItems.stream().filter(productToFind -> productToFind.getProductId()== deviceToRemove).toList();
+        Product product = null;
 
-        int currentQuantity = productToUpdate.getQuantity();
-        if (currentQuantity < quantityToRemove) {
-            throw new IllegalArgumentException("Insufficient quantity in the warehouse");
+        if (!list.isEmpty()) {
+            product = list.getFirst();
+            product.setQuantity(product.getQuantity()-quantityToRemove);
+            return true;
         }
-
-        productToUpdate.setQuantity(currentQuantity - quantityToRemove);
-        System.out.println("LOG - WAREHOUSE - Product removed from the Warehouse");
+        else
+            return false;
     }
+//    public void removeProduct(Integer productId, int quantityToRemove) {
+//        Product productToUpdate = scaffoldItems.stream()
+//                .filter(productToCheck -> productToCheck.getProductId() == productId)
+//                .findFirst()
+//                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+//
+//        int currentQuantity = productToUpdate.getQuantity();
+//        if (currentQuantity < quantityToRemove) {
+//            throw new IllegalArgumentException("Insufficient quantity in the warehouse");
+//        }
+//
+//        productToUpdate.setQuantity(currentQuantity - quantityToRemove);
+//        System.out.println("LOG - WAREHOUSE - Product removed from the Warehouse");
+//    }
 
 
     public List<Product> getInventory() {
@@ -51,13 +63,5 @@ class Warehouse {
         return scaffoldItems;
     }
 
-    public int getProductQuantity(int productId) {
-        Product productToUpdate = scaffoldItems.stream()
-                .filter(productToCheck -> productToCheck.getProductId() == productId)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
-
-        return productToUpdate.getQuantity();
-    }
 
 }

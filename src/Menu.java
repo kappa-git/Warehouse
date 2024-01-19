@@ -176,7 +176,6 @@ public class Menu {
         } else {
             System.out.println("Product not found in the warehouse");
         }
-
         start();
     }
 

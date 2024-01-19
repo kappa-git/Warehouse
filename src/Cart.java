@@ -5,47 +5,65 @@ class Cart {
     private Warehouse warehouse = new Warehouse();
     private List<Product> cartItems = new ArrayList<>();
     public Cart(){
-        this.cartItems.addAll(warehouse.getItems());
+        this.cartItems.addAll(warehouse.getInventory());
+    }
+    public List<Product> getInventoryCart(){
+        return new ArrayList<>(List.of());
     }
 
 
-    public void addQuantityProductCart(int productId, int quantityToAdd) {
-        Product productToUpdate = cartItems.stream()
-                .filter(productToCheck -> productToCheck.getProductId() == productId)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+    public void addQuantityProductCart(Product product, int quantityToAdd) {
 
-        if (warehouse.getItems().getFirst().getQuantity() >= quantityToAdd) {
-            // Update the quantity in cartItems
-            productToUpdate.setQuantity(productToUpdate.getQuantity() + quantityToAdd);
+        List<Product> resultList = cartItems.stream().filter(productToCheck -> productToCheck.getProductId() == product.getProductId()).toList();
 
-            // Remove the quantity from the warehouse
-            warehouse.removeProduct(productId, quantityToAdd);
+        if (!resultList.isEmpty()) {
+            Product productToUpdate = resultList.getFirst();
 
-            System.out.println("LOG - CART - Product added to the Cart");
-        } else {
-            System.out.println("LOG - CART - Not enough quantity in the warehouse");
+            if (product.toString().equals(productToUpdate.toString()))
+                cartItems.remove(productToUpdate);
         }
 
-    }
-
-    public void removeProductFromCart(int productId, int quantityToRemove) {
-        warehouse.addQuantityProduct(productId, quantityToRemove);
-        Product productToUpdate = cartItems.stream()
-                .filter(productToCheck -> productToCheck.getProductId() == productId)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Product not found in the Cart"));
-
-        int currentQuantity = productToUpdate.getQuantity();
-        if (currentQuantity < quantityToRemove) {
-            throw new IllegalArgumentException("Insufficient quantity in the Cart");
+        Product productToAdd;
+        try {
+            productToAdd = (Product) product.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
         }
 
-        productToUpdate.setQuantity(currentQuantity - quantityToRemove);
-        System.out.println("LOG - CART - Product removed from the Cart");
-
-
+        if (productToAdd != null)
+        {
+            productToAdd.setQuantity(quantityToAdd);
+            cartItems.add(productToAdd);
+            System.out.println("LOG - Cart - Product added to the Cart");
+        }
+        else
+        {
+            System.out.println("Not insert into cart - error");
+        }
     }
+    public List <Product> removeProductFromCart(Integer productId, Integer quantity) {
+        if (productId != null) {
+            cartItems.removeIf(product -> product.getProductId() == productId && (quantity == null || quantity<= 0 || product.getQuantity()<= quantity));
+
+        } return cartItems;
+    }
+//    public void removeProductFromCart(int productId, int quantityToRemove) {
+//        warehouse.addQuantityProduct(productId, quantityToRemove);
+//        Product productToUpdate = cartItems.stream()
+//                .filter(productToCheck -> productToCheck.getProductId() == productId)
+//                .findFirst()
+//                .orElseThrow(() -> new IllegalArgumentException("Product not found in the Cart"));
+//
+//        int currentQuantity = productToUpdate.getQuantity();
+//        if (currentQuantity < quantityToRemove) {
+//            throw new IllegalArgumentException("Insufficient quantity in the Cart");
+//        }
+//
+//        productToUpdate.setQuantity(currentQuantity - quantityToRemove);
+//        System.out.println("LOG - CART - Product removed from the Cart");
+//
+//
+//    }
 //    public void addQuantityProductCart(Product product, int quantityToAdd) {
 //        Product productToUpdate = cartItems.stream()
 //                .filter(productToCheck -> productToCheck == product)

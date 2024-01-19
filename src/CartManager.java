@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class CartManager {
     Warehouse warehouse;
     WarehouseManager warehouseManager;
@@ -7,8 +9,24 @@ public class CartManager {
         this.warehouse= new Warehouse();
         this.warehouseManager=new WarehouseManager();
     }
-    public void addToCart(int productId, int quantity) {
-        cart.addQuantityProductCart(productId, quantity);
+
+    public Boolean addToCart(int deviceIdToAdd, int quantityToAdd) {
+
+        List<Product> list = warehouse.getItems().stream().filter(productToFind -> productToFind.getProductId()== deviceIdToAdd).toList();
+        Product product = null;
+
+        if (!list.isEmpty())
+            product = list.getFirst();
+
+        if (product != null && (product.getQuantity() > 0 && quantityToAdd <= product.getQuantity())) {
+            cart.addQuantityProductCart(product,quantityToAdd);
+            warehouseManager.removeFromWarehouse(deviceIdToAdd,quantityToAdd);
+            System.out.println("LOG - CARTMANAGER - Product Added");
+            return true;
+        } else {
+            System.out.println("LOG - CARTMANAGER - Product Not Added");
+            return false;
+        }
     }
 
 //    private void addToCart() {
@@ -27,8 +45,15 @@ public class CartManager {
 //            start();
 //        }
 //    }
-public void removeProductFromCart(int productId, int quantity) {
-    cart.removeProductFromCart(productId, quantity);
+public void removeFromCart(int productId, int quantity) {
+    Integer product = warehouseManager.searchById(productId);
+    if (product != null) {
+        cart.removeProductFromCart(productId, product);
+        warehouseManager.addToWarehouse(productId, product);
+        System.out.println("Product removed from cart.");
+    } else {
+        System.out.println("Product not found in the cart.");
+    }
 }
 
 

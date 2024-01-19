@@ -1,11 +1,9 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 class WarehouseManager {
     private Warehouse warehouse;
     private Cart cart;
+
 
 
     public WarehouseManager() {
@@ -68,15 +66,26 @@ class WarehouseManager {
     }
 
 
-    public boolean addToWarehouse(int deviceIdToAdd, int quantityToAdd) {
-        Integer product = searchById(deviceIdToAdd);
+    public Boolean addToWarehouse(int deviceIdToAdd, int quantityToAdd) {
+        boolean exist;
+
+        List<Product> list = warehouse.getItems().stream().filter(productToFind -> productToFind.getProductId()== deviceIdToAdd).toList();
+        Product product = null;
+
+        exist = !list.isEmpty();
+
+        if (exist)
+            product = list.getFirst();
 
         if (product != null) {
             warehouse.addQuantityProduct(product, quantityToAdd);
             System.out.println("LOG - WAREHOUSEMANAGER - Product added.");
             return true;
         } else {
-            System.out.println("LOG - WAREHOUSEMANAGER - Product not added.");
+            if (!exist)
+                System.out.println("No match found for given id product");
+            else
+                System.out.println("LOG - WAREHOUSEMANAGER - Product not added.");
             return false;
         }
     }
@@ -152,6 +161,7 @@ class WarehouseManager {
             System.out.println("No result for search between: " + purchaseminPrice + " and: " + purchasemaxPrice);
         }
         return searchByRangeOfPrice;
+
     }
 
     public List<Product> searchByModel (String model) {
