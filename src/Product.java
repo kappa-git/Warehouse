@@ -1,4 +1,4 @@
-class Product {
+class Product implements Cloneable{
 
     private String deviceType;
     private String manufacturer;
@@ -10,12 +10,14 @@ class Product {
     private double sellingPrice;
     private int productId;
     private int quantity;
+
     public Product (){
 
     }
+
     public Product (String deviceType, String manufacturer, String model, String description,
-                   double displaySize, int storageSize, double purchasePrice,
-                   double sellingPrice, int productId) {
+                    double displaySize, int storageSize, double purchasePrice,
+                    double sellingPrice, int productId) {
         this.deviceType = deviceType;
         this.manufacturer = manufacturer;
         this.model = model;
@@ -27,7 +29,6 @@ class Product {
         this.productId = productId;
         this.quantity = 0;
     }
-
 
     public int getQuantity() {
         return quantity;
@@ -107,5 +108,44 @@ class Product {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("| ID: %-5s | Type: %-10s | Manufacturer: %-9s | Model: %-13s | Selling Price: %-7.2f | Display Size: %5.2f | Storage: %-5d | Purchase Price: %-6.2f | " +
+                        "Quantity: %-6d | Description: %-100s |",
+                getProductId(),
+                getDeviceType(),
+                getManufacturer(),
+                getModel(),
+                getSellingPrice(),
+                getDisplaySize(),
+                getStorageSize(),
+                getPurchasePrice(),
+                getQuantity(),
+                getDescription());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Product product = (Product) super.clone();
+
+        product.deviceType = new String(this.deviceType);
+        product.manufacturer = new String(this.manufacturer);
+        product.model = new String(this.model);
+        product.description = new String(this.description);
+        product.displaySize = this.displaySize;
+        product.storageSize = this.storageSize;
+        product.purchasePrice = this.purchasePrice;
+        product.sellingPrice = this.sellingPrice;
+        product.productId = this.productId;
+        product.quantity = this.quantity;
+
+        return product;
     }
 }
