@@ -10,12 +10,14 @@ class Product implements Cloneable{
     private double sellingPrice;
     private int productId;
     private int quantity;
+
     public Product (){
 
     }
+
     public Product (String deviceType, String manufacturer, String model, String description,
-                   double displaySize, int storageSize, double purchasePrice,
-                   double sellingPrice, int productId) {
+                    double displaySize, int storageSize, double purchasePrice,
+                    double sellingPrice, int productId) {
         this.deviceType = deviceType;
         this.manufacturer = manufacturer;
         this.model = model;
@@ -27,9 +29,6 @@ class Product implements Cloneable{
         this.productId = productId;
         this.quantity = 0;
     }
-
-
-    
 
     public int getQuantity() {
         return quantity;
@@ -110,9 +109,10 @@ class Product implements Cloneable{
     public void setProductId(int productId) {
         this.productId = productId;
     }
+
     @Override
     public String toString() {
-        return String.format("| ID: %-5s | Type: %-10s | Manufacturer: %-9s | Model: %-13s | Selling Price: %-6.2f | Display Size: %5.2f | Storage: %-4d | Puchase Price: %-6.2f | " +
+        return String.format("| ID: %-5s | Type: %-10s | Manufacturer: %-9s | Model: %-13s | Selling Price: %-7.2f | Display Size: %5.2f | Storage: %-5d | Purchase Price: %-6.2f | " +
                         "Quantity: %-6d | Description: %-100s |",
                 getProductId(),
                 getDeviceType(),
