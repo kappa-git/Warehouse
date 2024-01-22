@@ -27,7 +27,6 @@ class Warehouse {
         else
             return false;
     }
-
     public List<Product> getInventory() {
         Notebook laptop = new Notebook("Notebook", "Asus", "ZenBook", "Non disponibile", 14, 1024, 850.00, 1000.00, 4431);
         Notebook laptop1 = new Notebook("Notebook", "Hp", "Pavilion Plus", "Non disponibile", 16, 2048, 780.00, 1199.00, 4432);
