@@ -1,61 +1,45 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 class Cart {
-    Cart cart;
-    WarehouseManager warehouseManager;
-    Warehouse warehouse;
-
     private List<Product> cartItems = new ArrayList<>();
+
+
     public Cart(){
         this.cartItems.addAll(getInventoryCart());
     }
     public List<Product> getInventoryCart(){
-        return new ArrayList<>(Arrays.asList());
+        return new ArrayList<>(List.of());
     }
     public void addQuantityProductCart(Product product, int quantityToAdd) {
-        Product productToUpdate = cartItems.stream().filter(productToCheck -> productToCheck == product).collect(Collectors.toList()).getFirst();
-        cartItems.remove(productToUpdate);
-        productToUpdate.setQuantity(productToUpdate.getQuantity()+quantityToAdd);
-        cartItems.add(productToUpdate);
-        System.out.println("LOG - Cart - Product added to the Cart");
-    }
 
-    public Boolean addToCart(int deviceIdToAdd, int quantityToAdd) {
+        List<Product> resultList = cartItems.stream().filter(productToCheck -> productToCheck.getProductId() == product.getProductId()).toList();
 
-        Product product = warehouse.getItems().stream().filter(productToFind -> productToFind.getProductId() == deviceIdToAdd).toList().getFirst();
-        if (product != null && product.getQuantity() > 0) {
-            warehouseManager.removeFromWarehouse(deviceIdToAdd);
-            cart.addQuantityProductCart(product, quantityToAdd);
-            System.out.println("LOG - CARTMANAGER - Product Added");
-            return true;
-        } else {
-            System.out.println("LOG - CARTMANAGER - Product Not Added");
-            return false;
+        if (!resultList.isEmpty()) {
+            Product productToUpdate = resultList.getFirst();
+
+            if (product.toString().equals(productToUpdate.toString()))
+                cartItems.remove(productToUpdate);
+        }
+
+        Product productToAdd;
+        try {
+            productToAdd = (Product) product.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (productToAdd != null)
+        {
+            productToAdd.setQuantity(quantityToAdd);
+            cartItems.add(productToAdd);
+            System.out.println("LOG - Cart - Product added to the Cart");
+        }
+        else
+        {
+            System.out.println("Not insert into cart - error");
         }
     }
-
-//    public List <Product> addToCart2 (int productIdToAdd, int quantitytoAdd){
-//        List <Product>product = warehouse.getItems();
-//        if (product != null){
-//            cart.addQuantityProductCart(product, quantitytoAdd);
-//            warehouseManager.removeFromWarehouse(productIdToAdd);
-//
-//        }
-//    }
-
-
-
-
-
-//    public List <Product> addToCart(Product product) {
-//        if (product != null){
-//            cartItems.add(product);
-//        }
-//            return cartItems;
-//    }
 
     public List <Product> removeProductFromCart(Integer productId, Integer quantity) {
         if (productId != null) {
@@ -63,10 +47,19 @@ class Cart {
 
         } return cartItems;
     }
+    public double calcTotalProduct(Product product) {
+        return product.getSellingPrice() * product.getQuantity();
+    }
+
 
     public double calculateTotal() {
-        return cartItems.stream().mapToDouble(Product::getSellingPrice).sum();
+        double totalCart = 0;
+        for (Product product : cartItems) {
+            totalCart += calcTotalProduct(product);
+        }
+        return totalCart;
     }
+
 
     public void clearCart() {
         cartItems.clear();
@@ -82,6 +75,4 @@ class Cart {
                 .average()
                 .orElse(0.0);
     }
-
-
 }
