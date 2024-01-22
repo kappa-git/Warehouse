@@ -31,6 +31,8 @@ public class Menu {
                 9. Search by Manufacturer
                 10. Search by Selling Price
                 11. Search by Purchase Price
+                12. Print Cart Items
+                13. Print Warehouse Items
                 0. Exit""");
         System.out.print("Enter your choice: ");
         readChoiceInputFromUser();
@@ -63,6 +65,9 @@ public class Menu {
             case 9 -> MenuChoice.SearchByManufacturer;
             case 10 -> MenuChoice.SearchBySellingPrice;
             case 11 -> MenuChoice.SearchByPurchasePrice;
+            case 12 -> MenuChoice.GetItemInCart;
+            case 13 -> MenuChoice.GetItemInWarehouse;
+            case 0 -> MenuChoice.Exit;
             default -> MenuChoice.NotValid;
         };
     }
@@ -80,6 +85,8 @@ public class Menu {
             case SearchByManufacturer -> searchByManufacturer();
             case SearchBySellingPrice -> searchBySellingPrice();
             case SearchByPurchasePrice -> searchByPurchasePrice();
+            case GetItemInCart -> GetItemInCart();
+            case GetItemInWarehouse -> GetItemInWarehouse();
             case Exit -> {
                 System.out.println("Exiting program. Goodbye!");
                 scanner.close();
@@ -93,6 +100,14 @@ public class Menu {
 
     private void printProducts() {
         warehouseManager.printProducts();
+        start();
+    }
+    private void GetItemInCart(){
+        warehouseManager.getItemInCart();
+        start();
+    }
+    private void GetItemInWarehouse(){
+        warehouseManager.getItemInWarehouse();
         start();
     }
 
@@ -110,23 +125,31 @@ public class Menu {
         int deviceIdToRemove = scanner.nextInt();
         warehouseManager.removeFromWarehouse(deviceIdToRemove);
     }
-
     private void addToCart() {
-        System.out.println("Enter device ID to add to cart: ");
-        int deviceIdToAddToCart;
-
-        deviceIdToAddToCart = checkIfIntEntered();
-
-
-        Product product = warehouseManager.searchById(deviceIdToAddToCart);
-        if (product != null && cart.addToCart(product)) {
-            System.out.println("Product is added to cart");
-            start();
-        } else {
-            System.out.println("Product is NOT added to cart, please retry");
-            start();
-        }
+        System.out.println("Enter product ID: ");
+        int deviceIdToAdd = scanner.nextInt();
+        System.out.println("Enter quantity: ");
+        int quantityToAdd = scanner.nextInt();
+        cartManager.addToCart(deviceIdToAdd, quantityToAdd);
+        start();
     }
+
+//    private void addToCart() {
+//        System.out.println("Enter device ID to add to cart: ");
+//        int deviceIdToAddToCart;
+//
+//        deviceIdToAddToCart = checkIfIntEntered();
+//
+//
+//        Product product = warehouseManager.searchById(deviceIdToAddToCart);
+//        if (product != null && cart.addQuantityProductCart(product,).contains(product)){
+//            System.out.println("Product is added to cart");
+//            start();
+//        } else {
+//            System.out.println("Product is NOT added to cart, please retry");
+//            start();
+//        }
+//    }
 
     private Double calculateCartTotal(){
         return cart.calculateTotal();
@@ -141,7 +164,7 @@ public class Menu {
         int quantity = product.getQuantity();
         Integer productId = product.getProductId();
         if (deviceIdToRemoveToCart == productId) {
-            if (product != null && cart.removeProductFromCart(productId, quantity)) {
+            if (product != null && cart.removeProductFromCart(productId, quantity).contains(product)) {
                 System.out.println("Product is added to cart");
                 start();
             } else {
