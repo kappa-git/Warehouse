@@ -1,30 +1,65 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cart {
-    private final List<Product> cartItems = new ArrayList<>();
+class Cart {
+    private List<Product> cartItems = new ArrayList<>();
 
 
-    public Boolean addToCart(Product product) {
-        if (product != null){
-            return  cartItems.add(product);
-        } else{
-            return false;
+    public Cart(){
+        this.cartItems.addAll(getInventoryCart());
+    }
+    public List<Product> getInventoryCart(){
+        return new ArrayList<>(List.of());
+    }
+    public void addQuantityProductCart(Product product, int quantityToAdd) {
+
+        List<Product> resultList = cartItems.stream().filter(productToCheck -> productToCheck.getProductId() == product.getProductId()).toList();
+
+        if (!resultList.isEmpty()) {
+            Product productToUpdate = resultList.getFirst();
+
+            if (product.toString().equals(productToUpdate.toString()))
+                cartItems.remove(productToUpdate);
+        }
+
+        Product productToAdd;
+        try {
+            productToAdd = (Product) product.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (productToAdd != null)
+        {
+            productToAdd.setQuantity(quantityToAdd);
+            cartItems.add(productToAdd);
+            System.out.println("LOG - Cart - Product added to the Cart");
+        }
+        else
+        {
+            System.out.println("Not insert into cart - error");
         }
     }
 
-    public Boolean removeProductFromCart(Integer productId, Integer quantity) {
+    public List <Product> removeProductFromCart(Integer productId, Integer quantity) {
         if (productId != null) {
-            return cartItems.removeIf(product -> product.getProductId() == productId && (quantity == null || quantity<= 0 || product.getQuantity()<= quantity));
+            cartItems.removeIf(product -> product.getProductId() == productId && (quantity == null || quantity<= 0 || product.getQuantity()<= quantity));
 
-        } else {
-            return false;
-        }
+        } return cartItems;
     }
+    public double calcTotalProduct(Product product) {
+        return product.getSellingPrice() * product.getQuantity();
+    }
+
 
     public double calculateTotal() {
-        return cartItems.stream().mapToDouble(Product::getSellingPrice).sum();
+        double totalCart = 0;
+        for (Product product : cartItems) {
+            totalCart += calcTotalProduct(product);
+        }
+        return totalCart;
     }
+
 
     public void clearCart() {
         cartItems.clear();
@@ -40,6 +75,4 @@ public class Cart {
                 .average()
                 .orElse(0.0);
     }
-
-
 }
