@@ -9,8 +9,8 @@ class Warehouse {
         scaffoldItems.addAll(getInventory());
     }
 
-    public void addQuantityProduct(Product product, int quantityToAdd) {
-        Product productToUpdate = scaffoldItems.stream().filter(productToCheck -> productToCheck == product).collect(Collectors.toList()).getFirst();
+    public void addQuantityProduct(int product, int quantityToAdd) {
+        Product productToUpdate = scaffoldItems.stream().filter(productToCheck -> productToCheck.getProductId() == product).collect(Collectors.toList()).getFirst();
         productToUpdate.setQuantity(productToUpdate.getQuantity()+quantityToAdd);
         System.out.println("LOG - Warehouse - Product added to the Warehouse");
     }
