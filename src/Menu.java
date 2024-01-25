@@ -33,6 +33,9 @@ public class Menu {
                 11. Search by Purchase Price
                 12. Print Cart Items
                 13. Print Warehouse Items
+                14. Search by Device
+                15. Search by Model
+                16. Search range of price
                 0.  Exit""");
         System.out.print("Enter your choice: ");
         readChoiceInputFromUser();
@@ -66,6 +69,9 @@ public class Menu {
             case 11 -> MenuChoice.SearchByPurchasePrice;
             case 12 -> MenuChoice.GetItemInCart;
             case 13 -> MenuChoice.GetItemInWarehouse;
+            case 14 -> MenuChoice.SearchByDevice;
+            case 15 -> MenuChoice.SearchByModel;
+            case 16 -> MenuChoice.SearchByRangeOfPrice;
             case 0 -> MenuChoice.Exit;
             default -> MenuChoice.NotValid;
         };
@@ -86,6 +92,9 @@ public class Menu {
             case SearchByPurchasePrice -> searchByPurchasePrice();
             case GetItemInCart -> GetItemInCart();
             case GetItemInWarehouse -> GetItemInWarehouse();
+            case SearchByDevice -> searchByDevice();
+            case SearchByModel -> searchByModel();
+            case SearchByRangeOfPrice -> searchByRangeOfPrice();
             case Exit -> {
                 System.out.println("Exiting program. Goodbye!");
                 scanner.close();
@@ -95,6 +104,57 @@ public class Menu {
                 start();
             }
         }
+    }
+    private void searchByDevice() {
+        System.out.println("Enter type to search: ");
+
+        String deviceToSearch = checkIfStringIsEntered();
+
+
+        List<Product> result = manager.searchByDevice(deviceToSearch);
+        if (!result.isEmpty()) {
+            for (Product product : result) {
+                System.out.println(product);
+            }
+        } else {
+            System.out.println("The type not exist");
+        }
+        start();
+    }
+    private void searchByRangeOfPrice() {
+        System.out.println("Enter min price to search: ");
+
+        int purchaseminPrice = checkIfIntEntered();
+        System.out.println("Enter max price to search: ");
+
+        int purchasemaxPrice = checkIfIntEntered();
+
+
+        List<Product> result = manager.searchByRangeOfPrice(purchaseminPrice, purchasemaxPrice);
+        if (!result.isEmpty()) {
+            for (Product product : result) {
+                System.out.println(product);
+            }
+        } else {
+            System.out.println("The type not exist");
+        }
+        start();
+    }
+    private void searchByModel() {
+        System.out.println("Enter model to search: ");
+
+        String deviceToSearch = checkIfStringIsEntered();
+
+
+        List<Product> result = manager.searchByModel(deviceToSearch);
+        if (!result.isEmpty()) {
+            for (Product product : result) {
+                System.out.println(product);
+            }
+        } else {
+            System.out.println("The model not exist");
+        }
+        start();
     }
 
     private void printProducts() {
@@ -161,32 +221,23 @@ public class Menu {
 
     private void calculateCartTotal() {
         double total1 = manager.calculateCartTotal();
-        System.out.println("Il totale del carrello è: " + total1);
+        System.out.println("Total of Cart is: " + total1);
         start();
     }
 
     private void removeFromCart() {
-        System.out.println("Enter device ID to add to cart: ");
-        int deviceIdToRemoveToCart;
-
-        deviceIdToRemoveToCart = checkIfIntEntered();
-
-        manager.searchById(deviceIdToRemoveToCart);
-        int quantity = product.getQuantity();
-        int productId = product.getProductId();
-        if (deviceIdToRemoveToCart == productId) {
-            if (cart.removeProductFromCart(productId, quantity).contains(product)) {
-                System.out.println("Product is added to cart");
-                start();
-            } else {
-                System.out.println("Product is NOT added to cart, please retry");
-                start();
-            }
-        }
+        System.out.println("Enter product ID: ");
+        int deviceIdToAdd = scanner.nextInt();
+        System.out.println("Enter quantity: ");
+        int quantityToAdd = scanner.nextInt();
+        manager.removeFromCart(deviceIdToAdd, quantityToAdd);
+        start();
     }
 
-    private Double calculateMidTotal() {
-        return manager.calculateMidPrice();
+    private void calculateMidTotal() {
+        double midPrice = manager.calculateMidPrice();
+        System.out.println("Medium of Cart is: " + midPrice);
+        start();
     }
 
     private void finalizeSale() {
@@ -199,12 +250,13 @@ public class Menu {
         System.out.println("Enter purchase price to search: ");
         double purchasePriceToSearch = checkIfDoubleIsEntered();
 
-        List<Product> result = manager.searchBySellingPrice(purchasePriceToSearch);
+        List<Product> result = manager.searchByPurchasePrice(purchasePriceToSearch);
         if (!result.isEmpty()) {
             for (Product product : result) {
                 System.out.println(product);
             }
         }
+        start();
     }
 
 
@@ -218,12 +270,11 @@ public class Menu {
         if (!result.isEmpty()) {
             for (Product product : result) {
                 System.out.println(product);
-                start();
             }
         } else {
             System.out.println("The manufacturer not exist");
-            start();
         }
+        start();
     }
 
     private void searchBySellingPrice() {
@@ -236,6 +287,7 @@ public class Menu {
                 System.out.println(product.getSellingPrice());
             }
         }
+        start();
     }
 
 

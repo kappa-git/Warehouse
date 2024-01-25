@@ -1,9 +1,8 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 class Cart {
+
     private List<Product> cartItems = new ArrayList<>();
 
 
@@ -43,12 +42,27 @@ class Cart {
         }
     }
 
-    public List <Product> removeProductFromCart(Integer productId, Integer quantity) {
-        if (productId != null) {
-            cartItems.removeIf(product -> product.getProductId() == productId && (quantity == null || quantity<= 0 || product.getQuantity()<= quantity));
+//    public List<Product> removeProductFromCart(Product productId, Integer quantity) {
+//        if (productId != null && cartItems != null) {
+//            cartItems.removeIf(product ->
+//                    product.getProductId() == productId.getProductId() &&
+//                    (quantity == null || quantity >= 0 && product.getQuantity() >= quantity));
+//        }
+//        return cartItems;
+//    }
+public Boolean removeProductFromCart(int deviceToRemove, int quantityToRemove) {
+    List<Product> list = cartItems.stream().filter(product -> product.getProductId() == deviceToRemove).toList();
+    Product product = null;
 
-        } return cartItems;
+    if (!list.isEmpty()) {
+        product = list.getFirst();
+        product.setQuantity(product.getQuantity()-quantityToRemove);
+        return true;
     }
+    else
+        return false;
+}
+
     public double calcTotalProduct(Product product) {
         return product.getSellingPrice() * product.getQuantity();
     }
@@ -70,11 +84,24 @@ class Cart {
     public List<Product> getCartItems() {
         return cartItems;
     }
-
     public double calculateMidPrice() {
-        return cartItems.stream()
-                .mapToDouble(Product::getSellingPrice)
-                .average()
-                .orElse(0.0);
+        if (cartItems.isEmpty()) {
+            return 0;
+        }
+
+        double totalCart = 0;
+
+        for (Product product : cartItems) {
+            totalCart += product.getSellingPrice();
+        }
+
+        return totalCart / cartItems.size();
     }
+
+//    public double calculateMidPrice() {
+//        return cartItems.stream()
+//                .mapToDouble(Product::getSellingPrice)
+//                .average()
+//                .orElse(0.0);
+//    }
 }

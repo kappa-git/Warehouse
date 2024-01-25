@@ -35,7 +35,7 @@ public class Manager {
             product = list.getFirst();
 
         if (product != null) {
-            warehouse.addQuantityProduct(product, quantityToAdd);
+            warehouse.addQuantityProduct(deviceIdToAdd, quantityToAdd);
             System.out.println("LOG - WAREHOUSEMANAGER - Product added.");
             return true;
         } else {
@@ -69,17 +69,28 @@ public class Manager {
     public void removeFromWarehouse(int productId, int quantity) {
         warehouse.removeProduct(productId, quantity);
     }
-
     public void removeFromCart(int productId, int quantity) {
-        Product product = searchById(productId);
-        if (product != null) {
-            cart.removeProductFromCart(productId, product.getQuantity());
-            addToWarehouse(productId, product.getQuantity());
-            System.out.println("Product removed from cart.");
-        } else {
-            System.out.println("Product not found in the cart.");
-        }
+        cart.removeProductFromCart(productId, quantity);
+        warehouse.addQuantityProduct(productId, quantity);
     }
+//    public Boolean removeFromCart(int deviceIdToAdd, int quantityToAdd) {
+//
+//        List<Product> list = cart.getCartItems().stream().filter(productToFind -> productToFind.getProductId() == deviceIdToAdd).toList();
+//        Product product = null;
+//
+//        if (!list.isEmpty())
+//            product = list.getFirst();
+//
+//        if (product != null && (product.getQuantity() > 0 && quantityToAdd <= product.getQuantity())) {
+//            cart.removeProductFromCart(product, quantityToAdd);
+//            addToWarehouse(deviceIdToAdd, quantityToAdd);
+//            System.out.println("LOG - CARTMANAGER - Product Remove");
+//            return true;
+//        } else {
+//            System.out.println("LOG - CARTMANAGER - Product Added");
+//            return false;
+//        }
+//    }
 
     public double calculateMidPrice() {
         return cart.calculateMidPrice();
@@ -181,7 +192,7 @@ public class Manager {
         List<Product> searchModel = new ArrayList<>();
 
         for (Product product : warehouse.getInventory()) {
-            if (product.getModel().equals(model)) {
+            if (product.getModel().contains(model)) {
                 searchModel.add(product);
             }
         }

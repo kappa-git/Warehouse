@@ -13,6 +13,9 @@ public enum MenuChoice {
     SearchByPurchasePrice,
     GetItemInCart,
     GetItemInWarehouse,
+    SearchByDevice,
+    SearchByModel,
+    SearchByRangeOfPrice,
     Exit,
     NotValid
 }
